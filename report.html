@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en-NG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Full report | Nigeria Under Tinubu</title>
+<meta name="description" content="Full report: Nigeria under President Tinubu since 29 May 2023, by Bolaji Moyo. Nonpartisan, sourced, with a citizen checklist.">
+<meta property="og:title" content="Nigeria Under Tinubu: The Pains, the Gains, and the Evidence">
+<meta property="og:description" content="Full report: Nigeria under President Tinubu since 29 May 2023, by Bolaji Moyo. Nonpartisan, sourced, with a citizen checklist.">
+<meta property="og:image" content="assets/whatsapp-card.png">
+<style>
+  :root {
+    --color-bg: #f6f7f5; --color-panel: #ffffff; --color-fg: #14201a; --color-fg-muted: #4a5750;
+    --color-border-line: #dde2de; --color-ok: #0f7a4d; --color-warn: #a35f00; --color-bad: #b3261e;
+    --accent: #1f5fae;
+    --cds-chart-muted: #a7b0ab; --cds-chart-grid: #e6e9e7; --cds-chart-axis: #b9c0bc; --cds-chart-reference: #6b7670;
+    --cds-chart-status-critical: #c0392b; --cds-text-secondary: #56625c;
+    --cds-surface-popover: #ffffff; --cds-border: #d3d9d5; --cds-shadow-popover: 0 6px 20px rgba(20,32,26,.14);
+    --cds-font-size-caption: 0.8rem; --cds-font-size-body: 0.95rem; --cds-font-size-heading: 1.05rem; --cds-font-size-title: 1.6rem;
+    --cds-font-weight-medium: 600;
+    --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 14px; --cds-gap-lg: 20px; --cds-gap-xl: 40px;
+    --cds-pad-lg: 18px; --cds-radius: 10px;
+    --font-anthropic-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-anthropic-serif: Georgia, "Times New Roman", serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #0f1512; --color-panel: #18201c; --color-fg: #e8ede9; --color-fg-muted: #a3b0a8;
+      --color-border-line: #2b3631; --color-ok: #4cc38a; --color-warn: #e0a24a; --color-bad: #f07b72;
+      --accent: #6ea8ff;
+      --cds-chart-muted: #5d6963; --cds-chart-grid: #26302b; --cds-chart-axis: #46524c; --cds-chart-reference: #9aa69f;
+      --cds-chart-status-critical: #ef6f63; --cds-text-secondary: #a8b4ad;
+      --cds-surface-popover: #1f2924; --cds-border: #34413a; --cds-shadow-popover: 0 6px 20px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); }
+  body { -webkit-text-size-adjust: 100%; }
+  .site-wrap { max-width: 1120px; margin: 0 auto; padding: 20px max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+  .site-bar { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; justify-content: space-between; padding-bottom: 14px; margin-bottom: 22px; border-bottom: 1px solid var(--color-border-line); font-size: 0.85rem; }
+  .site-bar a { color: var(--color-fg); text-decoration: none; }
+  .site-bar nav { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .site-bar nav a { color: var(--color-fg-muted); }
+  .site-bar nav a:hover, .site-bar nav a:focus-visible, .site-bar nav a[aria-current] { color: var(--color-fg); text-decoration: underline; }
+  .site-brand { font-weight: 700; letter-spacing: .02em; }
+  .dash-select { font: inherit; font-size: 0.9rem; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--color-border-line); background-color: var(--color-panel); color: var(--color-fg); max-width: 100%; }
+  .dash-skeleton { opacity: .4; }
+  @media (max-width: 640px) {
+    #pain-gain table, #pain-gain tbody, #pain-gain tr, #pain-gain td,
+    #claims table, #claims tbody, #claims tr, #claims td { display: block; width: 100%; box-sizing: border-box; }
+    #pain-gain thead, #claims thead { display: none; }
+    #pain-gain tr, #claims tr { padding: 10px 0; border-bottom: 1px solid var(--color-border-line); }
+    #pain-gain td, #claims td { border: 0 !important; padding: 3px 0 !important; min-width: 0 !important; }
+    #pain-gain .ng-tablewrap, #claims .ng-tablewrap { overflow-x: visible; }
+  }
+
+  .prose { max-width: 46rem; font-size: 1.02rem; line-height: 1.6; }
+  .prose h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.7rem, 5vw, 2.5rem); line-height: 1.15; margin: 0 0 .4em; text-wrap: balance; }
+  .prose h2 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 1.55rem; margin: 2.2em 0 .5em; padding-top: .6em; border-top: 1px solid var(--color-border-line); text-wrap: balance; }
+  .prose h3 { font-size: 1.1rem; margin: 1.6em 0 .4em; }
+  .prose p, .prose li { color: var(--color-fg); }
+  .prose table { display: block; overflow-x: auto; border-collapse: collapse; width: 100%; font-size: .9rem; margin: 1em 0; }
+  .prose th, .prose td { text-align: left; vertical-align: top; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--color-border-line); min-width: 7rem; }
+  .prose th { font-size: .8rem; color: var(--color-fg-muted); font-weight: 600; }
+  .prose a { color: var(--accent); }
+  .toc { font-size: .9rem; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 10px; padding: 12px 16px; margin: 1.2em 0; }
+  .toc summary { cursor: pointer; font-weight: 600; }
+  .toc ol { margin: .6em 0 0; padding-left: 1.3em; }
+  .toc a { color: var(--color-fg); }
+</style>
+</head>
+<body><div class="site-wrap"><div class="site-bar"><a class="site-brand" href="index.html">bolajimoyo.com</a><nav aria-label="Site"><a href="index.html">Dashboard</a><a href="report.html" aria-current="page">Full report</a><a href="data.html">Data</a><a href="assets/whatsapp-card.png">WhatsApp card</a></nav></div><article class="prose"><h1 id="nigeria-under-tinubu-the-pains-the-gains-and-the-evidence">Nigeria Under Tinubu: The Pains, the Gains, and the Evidence</h1>
+<p>An evidence-based examination of economic reforms, national outcomes and everyday life since May 29, 2023.</p>
+<p>By Bolaji Moyo · Data to 11 November 2026 · Edition 2026-11-11.9</p>
+<h2 id="key-findings">Key findings</h2>
+<p>Three and a half years after 29 May 2023, the evidence shows a national balance sheet that is stronger and a household balance sheet that is weaker. Reserves, revenue, oil output and growth have improved, and inflation has come down from its peak. But the naira has lost about two-thirds of its dollar value, fuel costs several times more, poverty estimates have risen, and recorded killings have increased. Whether the national gains reach ordinary households is the question the evidence cannot yet answer, because Nigeria has not published unemployment figures since mid-2024 or a household survey since 2022/23.</p><details class="toc"><summary>Contents</summary><ol><li><a href="#key-findings">Key findings</a></li><li><a href="#about-this-report">About this report</a></li><li><a href="#where-nigeria-stood-in-may-2023">Where Nigeria stood in May 2023</a></li><li><a href="#the-reforms">The reforms</a></li><li><a href="#the-pain-to-gain-test">The pain-to-gain test</a></li><li><a href="#the-economy-scorecard">The economy scorecard</a></li><li><a href="#the-pains-what-it-costs-to-live">The pains: what it costs to live</a></li><li><a href="#security-killings-banditry-and-kidnapping">Security: killings, banditry and kidnapping</a></li><li><a href="#governance-and-public-services">Governance and public services</a></li><li><a href="#the-gains-what-has-been-delivered">The gains: what has been delivered</a></li><li><a href="#what-nigerians-think">What Nigerians think</a></li><li><a href="#nigeria-and-its-peers">Nigeria and its peers</a></li><li><a href="#claims-and-evidence">Claims and evidence</a></li><li><a href="#the-citizens-evidence-checklist">The citizen's evidence checklist</a></li><li><a href="#gaps-and-the-next-edition">Gaps and the next edition</a></li></ol></details>
+<ol>
+<li><strong>Growth:</strong> real GDP grew 4.43% in Q2 2026, up from 3.04% in 2023 (NBS, rebased series).</li>
+<li><strong>Inflation:</strong> headline inflation peaked at 34.80% in December 2024 and was 14.63% in September 2026; food inflation was 19.59%. The series was rebased in 2025, so the two figures are not strictly comparable.</li>
+<li><strong>The naira:</strong> the official rate moved from N464.67 to N1,350.45 per dollar, a loss of about 66% of its dollar value.</li>
+<li><strong>Reserves:</strong> gross reserves rose about 57%, from USD 35.15 bn to USD 55.22 bn.</li>
+<li><strong>Fuel:</strong> the average petrol price rose about 570%, from N238 to N1,596 a litre (May 2023 to May 2026).</li>
+<li><strong>Debt:</strong> public debt rose from N87.38 trn (June 2023) to N166.79 trn (June 2026), much of it from the naira's fall; as a share of GDP it was about 36% in 2025 (IMF).</li>
+<li><strong>Revenue:</strong> government revenue rose from 7.3% to 10.2% of GDP between 2023 and 2025 (IMF), and interest now takes about half of federal revenue, down from 84% in 2023.</li>
+<li><strong>Poverty:</strong> the World Bank estimates 63% of Nigerians were poor in 2025, against 56% in 2023. These are model estimates, not new survey data.</li>
+<li><strong>Security:</strong> deaths recorded by the Mass Atrocities Tracker rose from 4,416 (2023) to 6,518 (2025).</li>
+<li><strong>Public opinion:</strong> 93% said the country was going in the wrong direction in mid-2024, up from 89% in 2022 (Afrobarometer).</li>
+</ol>
+<p>Figures marked as author-supplied come from market observation and word of mouth, not official statistics. Sources are listed in each section and in the open data files.</p>
+<h2 id="about-this-report">About this report</h2>
+<p><strong>Scope.</strong> This report covers the period from the inauguration of President Bola Ahmed Tinubu on 29 May 2023 to 11 November 2026. It compares each measure with its level in May 2023 (or the nearest available period) and with the latest published figure.</p>
+<p><strong>Method.</strong> Every figure comes from a named source: official statistics (NBS, CBN, DMO, NUPRC, NERC), international institutions (IMF, World Bank, UNESCO), independent trackers and polls, or press reports of these. Where only a press report was available, the source says "reported by". Values are never overwritten: revisions are added as new rows, so changes stay visible. Where a statistical method changed (GDP rebasing in 2025, inflation rebasing in 2025, the 2023 labour survey redesign), the figures are flagged and not chained together as if comparable.</p>
+<p><strong>Author-supplied figures.</strong> Some household prices and incomes (2023 rice prices, electricity tariffs, school fees, a trader's take-home pay, a remittance amount, one diesel receipt) come from the author's market observation and word of mouth. They are labelled as such, rest on small samples, and should be read as illustrations, not statistics.</p>
+<p><strong>Verdicts.</strong> Claims are rated Supported, Partly supported, Cannot be verified or Not supported, using the same test for government and opposition.</p>
+<p><strong>Disclosure.</strong> This independent research project is an initiative of Bolaji Moyo, created to improve public understanding of Nigeria's economic and social conditions under President Bola Ahmed Tinubu. It is designed to outlast the current administration, so that Nigerians can compare the performance of successive presidents on the same measures.</p>
+<p>Bolaji Moyo sets the research direction, poses the critical questions and exercises editorial oversight. Claude, an AI model made by Anthropic, supports data gathering, analysis, comparison, explanation and visual presentation.</p>
+<p>The project is not commissioned, funded, affiliated with or endorsed by any political party, candidate or government institution, and it does not endorse any candidate, party or voting choice. Its purpose is to present verifiable evidence, distinguish government claims from measurable outcomes, and help readers reach their own conclusions.</p>
+<p>Every statistic, interpretation and visualisation is tied to an identifiable source. Consequential AI-generated analysis is checked by the author against its sources, and any unresolved limitations are disclosed.</p>
+<p><strong>Right of reply.</strong> Any member of the public, official, party or organisation may submit a correction or response, with evidence. Material corrections will be made in the next edition and listed in a corrections log. <em>Send corrections and responses to why9ija@gmail.com. The report and data are at bolajimoyo.com.</em></p>
+<p><strong>Updates.</strong> The data are refreshed on the author's request; each new edition begins with a refresh and carries a new edition number.</p>
+<h2 id="where-nigeria-stood-in-may-2023">Where Nigeria stood in May 2023</h2>
+<p>The administration inherited high inflation, a currency with several exchange rates, a costly petrol subsidy and debt service that consumed nearly all federal revenue.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>May 2023 (or nearest)</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Headline inflation</td>
+<td>22.41% (food 24.82%)</td>
+<td>NBS, as reported by ThisDay</td>
+</tr>
+<tr>
+<td>Official exchange rate</td>
+<td>N464.67 per USD (parallel market about N750 to N763)</td>
+<td>FMDQ, as reported by Legit.ng</td>
+</tr>
+<tr>
+<td>Gross external reserves</td>
+<td>USD 35.15 bn</td>
+<td>CBN, as reported by Legit.ng</td>
+</tr>
+<tr>
+<td>Public debt</td>
+<td>N49.85 trn (Mar 2023); N87.38 trn (Jun 2023) after Ways and Means advances were added</td>
+<td>DMO, as reported by Nairametrics</td>
+</tr>
+<tr>
+<td>Debt service to revenue</td>
+<td>96.3% (2022)</td>
+<td>World Bank, as reported by ICIR</td>
+</tr>
+<tr>
+<td>Petrol subsidy cost</td>
+<td>N4.39 trn (2022)</td>
+<td>NNPC, as reported by ThisDay</td>
+</tr>
+<tr>
+<td>Petrol price</td>
+<td>N238.11 a litre</td>
+<td>NBS</td>
+</tr>
+<tr>
+<td>Monetary policy rate</td>
+<td>18.5%</td>
+<td>CBN</td>
+</tr>
+<tr>
+<td>Crude oil output</td>
+<td>1.18 m barrels a day</td>
+<td>NUPRC, as reported by TheCable</td>
+</tr>
+<tr>
+<td>Minimum wage</td>
+<td>N30,000 a month</td>
+<td>Minimum Wage Act 2019</td>
+</tr>
+<tr>
+<td>Poverty</td>
+<td>40% (2018/19 survey); 56% (2023, World Bank)</td>
+<td>NBS; World Bank</td>
+</tr>
+<tr>
+<td>Unemployment</td>
+<td>4.2% (Q2 2023, new method)</td>
+<td>NBS</td>
+</tr>
+<tr>
+<td>Grid capacity</td>
+<td>4,388 MW average available (Q2 2023)</td>
+<td>NERC, as reported by Guardian</td>
+</tr>
+</tbody>
+</table>
+<p>The Ways and Means jump in June 2023 reflects central bank loans to the previous government being moved onto the debt record; it is not new borrowing by this administration.</p>
+<h2 id="the-reforms">The reforms</h2>
+<p>Four policy changes drive most of what follows.</p>
+<p><strong>Petrol subsidy removal (May 2023).</strong> The President announced the end of the petrol subsidy in his inaugural address. The average pump price more than doubled within a month (N238 in May to N546 in June 2023, NBS) and reached N1,596 by May 2026. The IMF estimates an implicit subsidy of about N8.43 trn persisted in 2024 through below-market crude supply, and says it ended in October 2024.</p>
+<p><strong>Exchange-rate unification (June 2023).</strong> The central bank merged its exchange-rate windows and let the naira trade closer to market levels. The official rate went from N464.67 to N907 by December 2023 and N1,535 by December 2024, before recovering to N1,350 in November 2026. The gap between the official and parallel rates narrowed from about 61% to 64% in May 2023 to about 4% to 5% in November 2026.</p>
+<p><strong>Monetary tightening (2023 to 2025).</strong> The policy rate rose from 18.5% to a peak of 27.5% by late 2024, and has since been cut to 23.0% (September 2026).</p>
+<p><strong>Tax reform (in force January 2026).</strong> Four tax acts signed on 26 June 2025 exempt people with gross income up to N1.2 m a year and small companies with turnover up to N100 m from income tax. Their effects cannot yet be measured.</p>
+<p><strong>Cushioning measures.</strong> The minimum wage rose from N30,000 to N70,000 in July 2024; cash transfers have reached about 9.18 m households at least once (target 15 m); student loans have been paid to about 1.39 m students; and a compressed natural gas (CNG) programme has converted vehicles away from petrol.</p>
+<h2 id="the-pain-to-gain-test">The pain-to-gain test</h2>
+<p>Each major reform is put to the same ten questions. Every answer is marked <strong>Realised</strong> (measured and already happened), <strong>Projected</strong> (promised or expected, not yet measurable) or <strong>Not yet sourced</strong> (the evidence is not in this edition). Two patterns stand out: the fiscal and external gains are realised, while most household gains are still projections; and the costs fell first and hardest on fuel buyers, importers and wage earners.</p>
+<table>
+<thead>
+<tr>
+<th>Reform</th>
+<th>Benefits already realised</th>
+<th>Benefits still projected</th>
+<th>Who mainly absorbed the cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Petrol subsidy removal</td>
+<td>More revenue for all tiers of government</td>
+<td>Savings turning into services and infrastructure; cheaper fuel from local refining and CNG</td>
+<td>Fuel buyers, commuters, small firms</td>
+</tr>
+<tr>
+<td>Exchange-rate unification</td>
+<td>Narrow official-parallel gap; reserves up 57%; more capital inflows; rating upgrades</td>
+<td>Lasting direct investment; competitive local industry</td>
+<td>Importers, consumers of imported goods, wage earners and naira savers</td>
+</tr>
+<tr>
+<td>Monetary tightening</td>
+<td>Inflation down from its peak</td>
+<td>Single-digit inflation with cheaper credit</td>
+<td>Borrowers and businesses</td>
+</tr>
+<tr>
+<td>Tax reform (2026)</td>
+<td>None yet measurable</td>
+<td>Lower tax for low earners and small firms; higher revenue</td>
+<td>Not yet measurable</td>
+</tr>
+</tbody>
+</table>
+<h3 id="petrol-subsidy-removal-may-2023">Petrol subsidy removal (May 2023)</h3>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Evidence</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. What problem was it meant to solve?</td>
+<td>The subsidy cost N4.39 trn in 2022 (NNPC, as reported by ThisDay), while debt service took 96.3% of revenue (World Bank).</td>
+<td>Realised (baseline)</td>
+</tr>
+<tr>
+<td>2. What did Nigerians sacrifice?</td>
+<td>The average pump price rose from N238 to N546 a litre within a month and to N1,596 by May 2026 (+570%, NBS). A litre now takes about 4.0 hours of minimum-wage work, up from 1.4. City bus fares rose about 115%.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>3. What measurable benefit has materialised?</td>
+<td>FAAC distributions to the three tiers rose from N10.9 trn (2023) to N15.26 trn (2024), according to NEITI as reported by Leadership. Government revenue rose from 7.3% to 10.2% of GDP (2023 to 2025, IMF). Part of this rise also comes from the naira's fall, which raises the naira value of oil revenue; this edition cannot separate the two.</td>
+<td>Realised (attribution partial)</td>
+</tr>
+<tr>
+<td>4. Who received the benefit?</td>
+<td>All tiers: in 2024 states received N5.81 trn (up 62%), the federal government N4.95 trn (up 24%) and local governments N3.77 trn (up 47%), per NEITI. Whether this reached households as services is not measured here.</td>
+<td>Realised (fiscal); household effect not yet sourced</td>
+</tr>
+<tr>
+<td>5. Who absorbed the cost?</td>
+<td>Buyers of petrol and transport, generator users and small businesses. 85% of adults disapproved of removal in mid-2024 (Afrobarometer). The poverty estimate rose from 56% (2023) to 63% (2025, World Bank), though not all of this can be attributed to subsidy removal.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>6. Were alternative policies available?</td>
+<td>Options discussed in public debate included a phased removal and having compensation in place before removal. This edition has not sourced a costed assessment of them.</td>
+<td>Not yet sourced</td>
+</tr>
+<tr>
+<td>7. Were promised relief measures delivered?</td>
+<td>Partly. The N8,000-a-month household plan was suspended after criticism (ICIR, Oct 2023). Cash transfers reached about 9.18 m households at least once against a 15 m target. The minimum wage rose to N70,000 in July 2024. More than 143,000 vehicles ran on CNG by Q3 2026. Release of the N75 bn manufacturers' fund was delayed, according to the Manufacturers Association of Nigeria. Payment of the N35,000 wage award for federal workers has not been verified here.</td>
+<td>Partly delivered</td>
+</tr>
+<tr>
+<td>8. How long has the adjustment taken?</td>
+<td>Prices jumped within a month and were still rising three years later (May 2026). The IMF estimates an implicit subsidy of about N8.43 trn persisted in 2024 and ended only in October 2024, about 17 months after the announcement.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>9. What would show sustainable success?</td>
+<td>No return of a hidden subsidy; the extra FAAC revenue showing up in state capital spending and services; petrol prices stable in real terms; poverty falling on a new household survey.</td>
+<td>Projected</td>
+</tr>
+<tr>
+<td>10. What evidence contradicts the government's explanation?</td>
+<td>The subsidy was declared gone in May 2023, but the IMF estimates an implicit subsidy continued through most of 2024. Relief fell short of announced targets.</td>
+<td>Realised</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exchange-rate-unification-june-2023">Exchange-rate unification (June 2023)</h3>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Evidence</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. What problem was it meant to solve?</td>
+<td>Several exchange rates: the official rate was N464.67 per dollar while the parallel market was about N750 to N763, a 61% to 64% gap.</td>
+<td>Realised (baseline)</td>
+</tr>
+<tr>
+<td>2. What did Nigerians sacrifice?</td>
+<td>The naira lost about 66% of its dollar value (to N1,350.45, after a low of N1,535 in December 2024). Headline inflation peaked at 34.80% in December 2024. Public debt in naira rose from N87.38 trn to N166.79 trn, much of it from revaluing foreign debt.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>3. What measurable benefit has materialised?</td>
+<td>The official-parallel gap narrowed to about 4% to 5%. Gross reserves rose 57% to USD 55.22 bn. Capital importation rose from USD 3.9 bn (2023) to USD 23.22 bn (2025, NBS). All three rating agencies upgraded Nigeria.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>4. Who received the benefit?</td>
+<td>Dollar earners and exporters; families receiving remittances (USD 150 a month is worth 191% more in naira than at the 2023 official rate); foreign investors; government, through a higher naira value of oil revenue.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>5. Who absorbed the cost?</td>
+<td>Importers and buyers of imported goods, workers on naira wages, holders of naira savings, and firms with dollar debts. Remittance families who used the parallel rate in 2023 gained only 77% to 80%, less than prices rose.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>6. Were alternative policies available?</td>
+<td>A slower managed adjustment was an option in principle. This edition has not sourced a costed assessment.</td>
+<td>Not yet sourced</td>
+</tr>
+<tr>
+<td>7. Were promised relief measures delivered?</td>
+<td>No relief was tied specifically to the exchange rate; the general measures above apply.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>8. How long has the adjustment taken?</td>
+<td>The naira fell for about 18 months, to December 2024, then partly recovered. Inflation peaked about 19 months after unification.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>9. What would show sustainable success?</td>
+<td>A stable naira without drawing down reserves; the gap staying small; inflows shifting from portfolio money to direct investment; single-digit inflation.</td>
+<td>Projected</td>
+</tr>
+<tr>
+<td>10. What evidence contradicts the government's explanation?</td>
+<td>The central bank withdrew a USD 58.81 bn reserves figure in October 2026, and its net-reserves definition differs from the IMF's by about USD 8 bn. The composition of the 2025 inflows (portfolio or direct) is not yet sourced.</td>
+<td>Realised</td>
+</tr>
+</tbody>
+</table>
+<h3 id="monetary-tightening-2023-to-2025">Monetary tightening (2023 to 2025)</h3>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Evidence</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. What problem was it meant to solve?</td>
+<td>Rising inflation (22.41% in May 2023) with interest rates well below it.</td>
+<td>Realised (baseline)</td>
+</tr>
+<tr>
+<td>2. What did Nigerians sacrifice?</td>
+<td>Dearer credit: the policy rate rose from 18.5% to a peak of 27.5% (December 2024).</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>3. What measurable benefit has materialised?</td>
+<td>Inflation fell from 34.80% (December 2024) to 14.63% (September 2026), and the policy rate has since been cut to 23.0%.</td>
+<td>Realised (attribution shared)</td>
+</tr>
+<tr>
+<td>4. Who received the benefit?</td>
+<td>Holders of naira deposits and government securities, and portfolio investors.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>5. Who absorbed the cost?</td>
+<td>Borrowers, manufacturers and other businesses relying on credit, and government through a higher interest bill.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>6. Were alternative policies available?</td>
+<td>Not assessed in this edition.</td>
+<td>Not yet sourced</td>
+</tr>
+<tr>
+<td>7. Were promised relief measures delivered?</td>
+<td>No relief was attached to the rate rises.</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>8. How long has the adjustment taken?</td>
+<td>About two years from the first increases to the first cuts (September 2025).</td>
+<td>Realised</td>
+</tr>
+<tr>
+<td>9. What would show sustainable success?</td>
+<td>Single-digit inflation with positive real interest rates and growing lending to private businesses.</td>
+<td>Projected</td>
+</tr>
+<tr>
+<td>10. What evidence contradicts the government's explanation?</td>
+<td>Much of the fall in inflation coincided with the January 2025 rebasing, so part of it is statistical. Food inflation rose again, from 10.84% (December 2025) to 19.59% (September 2026).</td>
+<td>Realised</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tax-reform-in-force-january-2026">Tax reform (in force January 2026)</h3>
+<p>The four tax acts took effect ten months before this edition, so almost every answer is a projection. <strong>Problem:</strong> low revenue, 7.3% of GDP in 2023 (IMF), with a heavy burden on low earners and small firms. <strong>Sacrifice and who bears it:</strong> not yet measurable. <strong>Benefit and who receives it:</strong> projected; people with gross income up to N1.2 m a year and small companies with turnover up to N100 m are exempt from income tax. <strong>Relief:</strong> built into the exemptions. <strong>Adjustment:</strong> too early to judge. <strong>Sustainable success would show as:</strong> revenue rising as a share of GDP without a rise in poverty, more registered taxpayers and fewer taxes on the poorest. <strong>Contradicting evidence:</strong> none yet; the record N28.3 trn collected in 2025 predates the acts.</p>
+<h2 id="the-economy-scorecard">The economy scorecard</h2>
+<p>Most national indicators are better than in May 2023; the currency and prices are the main exceptions.</p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>May 2023</th>
+<th>Latest</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real GDP growth</td>
+<td>3.04% (2023)</td>
+<td>4.43% (Q2 2026)</td>
+<td>Better</td>
+</tr>
+<tr>
+<td>Headline inflation</td>
+<td>22.41%</td>
+<td>14.63% (Sep 2026; peak 34.80%, Dec 2024)</td>
+<td>Better than peak; series rebased</td>
+</tr>
+<tr>
+<td>Food inflation</td>
+<td>24.82%</td>
+<td>19.59% (Sep 2026)</td>
+<td>Better than peak (39.84%)</td>
+</tr>
+<tr>
+<td>Official exchange rate</td>
+<td>N464.67 per USD</td>
+<td>N1,350.45 (6 Nov 2026)</td>
+<td>Worse: naira lost about 66% of its dollar value</td>
+</tr>
+<tr>
+<td>Gross reserves</td>
+<td>USD 35.15 bn</td>
+<td>USD 55.22 bn (30 Oct 2026)</td>
+<td>Better: up 57%</td>
+</tr>
+<tr>
+<td>Public debt (naira)</td>
+<td>N87.38 trn (Jun 2023)</td>
+<td>N166.79 trn (Jun 2026)</td>
+<td>Higher</td>
+</tr>
+<tr>
+<td>Debt to GDP</td>
+<td>36.3% (2023)</td>
+<td>36.1% (2025)</td>
+<td>About the same (IMF)</td>
+</tr>
+<tr>
+<td>External debt</td>
+<td>USD 43.16 bn (Jun 2023)</td>
+<td>USD 51.90 bn (Mar 2026)</td>
+<td>Higher by about USD 8.7 bn</td>
+</tr>
+<tr>
+<td>Revenue to GDP</td>
+<td>7.3% (2023)</td>
+<td>10.2% (2025)</td>
+<td>Better (IMF)</td>
+</tr>
+<tr>
+<td>Interest to FGN revenue</td>
+<td>83.8% (2023)</td>
+<td>53.7% (2026 projection)</td>
+<td>Better (IMF)</td>
+</tr>
+<tr>
+<td>Fiscal balance</td>
+<td>-3.1% of GDP (2023)</td>
+<td>-1.8% (2025)</td>
+<td>Better (IMF)</td>
+</tr>
+<tr>
+<td>Crude oil output</td>
+<td>1.18 m bpd</td>
+<td>1.53 m bpd crude; 1.72 m with condensate (2026)</td>
+<td>Better</td>
+</tr>
+<tr>
+<td>Capital importation</td>
+<td>USD 3.9 bn (2023)</td>
+<td>USD 23.22 bn (2025)</td>
+<td>Better (NBS)</td>
+</tr>
+<tr>
+<td>Credit ratings</td>
+<td>Moody's Caa1; S&amp;P B-; Fitch B-</td>
+<td>Moody's B3; S&amp;P B; Fitch B</td>
+<td>Upgraded by all three</td>
+</tr>
+<tr>
+<td>Policy rate</td>
+<td>18.5%</td>
+<td>23.0% (Sep 2026)</td>
+<td>Higher</td>
+</tr>
+<tr>
+<td>Unemployment</td>
+<td>4.2% (Q2 2023)</td>
+<td>4.3% (Q2 2024); no release since</td>
+<td>Unknown</td>
+</tr>
+</tbody>
+</table>
+<p>Debt in naira nearly doubled, but most of that rise reflects the naira's fall, which inflates the naira value of foreign debt; relative to the economy, debt is about where it was. The rebased GDP series (2025) raised the size of the economy, which lowers all ratios to GDP; ratios before and after rebasing should be compared with care.</p>
+<h2 id="the-pains-what-it-costs-to-live">The pains: what it costs to live</h2>
+<p>For a worker who actually receives the N70,000 minimum wage, most staple foods, cooking gas and bus fares take about the same hours of work as in May 2023, because their prices rose 113% to 157% while the wage rose 133%. Fuel and rice are the exceptions. For the many Nigerians whose pay did not rise with the minimum wage, every item is harder to afford.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>May 2023</th>
+<th>Latest</th>
+<th>Change</th>
+<th>Hours of minimum-wage work then / now</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Garri, 1kg</td>
+<td>N371</td>
+<td>N809 (Apr 2026)</td>
+<td>+118%</td>
+<td>2.1 / 2.0</td>
+</tr>
+<tr>
+<td>Beans, 1kg</td>
+<td>N630</td>
+<td>N1,339 (Apr 2026)</td>
+<td>+113%</td>
+<td>3.6 / 3.3</td>
+</tr>
+<tr>
+<td>Tomato, 1kg</td>
+<td>N498</td>
+<td>N1,178 (Apr 2026)</td>
+<td>+136%</td>
+<td>2.9 / 2.9</td>
+</tr>
+<tr>
+<td>Cooking gas, 12.5kg</td>
+<td>N9,538</td>
+<td>N22,382 (Apr 2026)</td>
+<td>+135%</td>
+<td>55 / 55</td>
+</tr>
+<tr>
+<td>City bus fare</td>
+<td>N650</td>
+<td>N1,397 (Apr 2026)</td>
+<td>+115%</td>
+<td>3.8 / 3.5</td>
+</tr>
+<tr>
+<td>Petrol, 1 litre</td>
+<td>N238</td>
+<td>N1,596 (May 2026)</td>
+<td>+570%</td>
+<td>1.4 / 4.0</td>
+</tr>
+<tr>
+<td>Diesel, 1 litre</td>
+<td>N844</td>
+<td>N3,277 (May 2026, national)</td>
+<td>+288%</td>
+<td>4.9 / 8.1</td>
+</tr>
+<tr>
+<td>Local rice, 50kg</td>
+<td>About N31,000 (author-supplied)</td>
+<td>N112,000 (Mar 2026)</td>
+<td>+261%</td>
+<td>179 / 277</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: NBS price watches, as reported by Nairametrics, NAN, Legit.ng and ThisDay. One Lagos diesel receipt (N1,905 a litre, 30 October 2026) suggests prices have since fallen well below the May 2026 national average.</p>
+<p><strong>An illustrative monthly basket</strong> (garri, beans, tomato, onion, palm oil, one gas refill and 44 bus trips) cost about N50,700 in May 2023 and about N111,800 now: 169% of the minimum wage then and 160% now. It leaves out rice, rent, electricity, school fees and healthcare.</p>
+<p><strong>Other costs (author-supplied).</strong> Band A electricity rose from about N68 to N71 per kWh to about N209.50, roughly three times as much; Band B rose only about 13%. School fees of N120,000 (primary) and N180,000 (secondary) a term in 2023 would be about N251,500 and N377,300 today if they had risen with inflation.</p>
+<h3 id="household-profiles">Household profiles</h3>
+<table>
+<thead>
+<tr>
+<th>Profile</th>
+<th>What happened to purchasing power</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minimum-wage worker</td>
+<td>Roughly unchanged for staples; worse for fuel and rice (above)</td>
+</tr>
+<tr>
+<td>Trader or driver (author-supplied N3,500 then N5,500 a day)</td>
+<td>Income up 57%, prices up about 110% to 120%: real take-home down about 25% to 29%. A month's take-home bought 2.9 bags of local rice in 2023 and 1.3 now</td>
+</tr>
+<tr>
+<td>Family receiving USD 150 a month</td>
+<td>Up 191% in naira at the official rate (better off); up 77% to 80% against the 2023 parallel rate (worse off)</td>
+</tr>
+<tr>
+<td>Elected office holder (senator, RMAFC)</td>
+<td>Regular pay N1,063,860 a month, apparently unchanged: worth about 52% less in real terms, if unchanged since 2023</td>
+</tr>
+<tr>
+<td>Teacher on Kano State payroll</td>
+<td>Floor rose from N30,000 to N71,000 (13% real gain at the floor); actual grade pay <em>to be supplied</em></td>
+</tr>
+<tr>
+<td>Smallholder farmer</td>
+<td>NPK fertiliser up 157% (N23,700 to N61,000 a bag); crop prices <em>to be supplied</em></td>
+</tr>
+<tr>
+<td>Nurse, Ilorin; pensioner, Enugu; undergraduate, Port Harcourt; young graduate; North-East family; Abuja professional; affluent Lagos household</td>
+<td><em>Figures to be supplied by the author in the next edition</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="security-killings-banditry-and-kidnapping">Security: killings, banditry and kidnapping</h2>
+<p>Deaths recorded by the main independent tracker have risen every year since 2023. Abductions remain very high, but the counts available use different methods and periods, so a reliable trend cannot yet be drawn. Nigeria publishes no official, regular security dataset, so the government's claims of improvement cannot be checked.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Earlier</th>
+<th>Latest</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deaths recorded by the Mass Atrocities Tracker</td>
+<td>4,416 (2023)</td>
+<td>5,353 (2024); 6,518 (2025)</td>
+<td>Mass Atrocities Tracker, as reported in press</td>
+</tr>
+<tr>
+<td>Reported fatalities from political violence</td>
+<td>10,763 (2022)</td>
+<td>Later years need an ACLED export</td>
+<td>ACLED via ACCORD</td>
+</tr>
+<tr>
+<td>People abducted (Nigeria Security Tracker)</td>
+<td>4,680 (2022)</td>
+<td>Tracker totals of 12,362 abducted from 2023 to April 2026</td>
+<td>NST; press compilations</td>
+</tr>
+<tr>
+<td>Kidnapping incidents experienced by households</td>
+<td>No earlier survey</td>
+<td>About 2.24 m (May 2023 to April 2024)</td>
+<td>NBS Crime Experience and Security Perception Survey</td>
+</tr>
+<tr>
+<td>People abducted, January to April 2026</td>
+<td></td>
+<td>At least 1,100</td>
+<td>Amnesty International</td>
+</tr>
+<tr>
+<td>Internally displaced people, North-East</td>
+<td></td>
+<td>2.30 m (June 2023)</td>
+<td>IOM DTM</td>
+</tr>
+</tbody>
+</table>
+<p>The NBS survey figure counts kidnappings households reported experiencing, including short ones, so it is far higher than tracker counts based on media reports. Neither method is complete. Trackers based on press reports undercount remote areas.</p>
+<p>Two official claims, that terror-related deaths fell 81% since 2015 and that the security situation scores 65% to 70%, are rated <strong>Cannot be verified</strong>: no dataset was published with either claim, and the first uses a base year eight years before this administration.</p>
+<h2 id="governance-and-public-services">Governance and public services</h2>
+<p>The record is mixed and thinly measured: modest gains on transparency indices and grid stability, little change in power supply, and health spending far below international targets.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Earlier</th>
+<th>Latest</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Average available grid capacity</td>
+<td>4,388 MW (Q2 2023)</td>
+<td>4,458 MW (Q1 2026); peak 5,400 MW (Q4 2025)</td>
+<td>NERC, as reported by Guardian and Arise</td>
+</tr>
+<tr>
+<td>Distribution companies' losses</td>
+<td>Not yet sourced</td>
+<td>37.4% of energy value lost (Q1 2026), against a 16.9% target</td>
+<td>NERC, as reported by Arise</td>
+</tr>
+<tr>
+<td>National grid collapses</td>
+<td>12.8 a year (2015 to 2022)</td>
+<td>About 6.7 a year since 2023 (12 in 2024)</td>
+<td>Intelpoint, press-compiled</td>
+</tr>
+<tr>
+<td>Health share of federal budget</td>
+<td>About 4.9% (2023)</td>
+<td>5.2% (approved 2026)</td>
+<td>Budget figures; BudgIT</td>
+</tr>
+<tr>
+<td>Debt service in federal budget</td>
+<td></td>
+<td>N15.81 trn, about 23% of the approved 2026 budget</td>
+<td>BudgIT</td>
+</tr>
+<tr>
+<td>Corruption Perceptions Index</td>
+<td>24, 150th of 180 (2022)</td>
+<td>26, 142nd of 182 (2025)</td>
+<td>Transparency International</td>
+</tr>
+<tr>
+<td>Press freedom rank</td>
+<td>123rd of 180 (2023)</td>
+<td>112th (2026)</td>
+<td>Reporters Without Borders</td>
+</tr>
+<tr>
+<td>Out-of-school children</td>
+<td>About 20 m aged 6 to 18 (UNESCO, 2022)</td>
+<td>18.2 m (UNESCO); 10.2 m (UNICEF, different definition)</td>
+<td>UNESCO; UNICEF</td>
+</tr>
+</tbody>
+</table>
+<p>Notes: budget shares are allocations, not money released; the Abuja Declaration target for health is 15%. A one- or two-point change in the corruption index may not be statistically meaningful. The out-of-school figures use different definitions and cannot show a trend. Grid-collapse counts are press compilations; there is no official annual count.</p>
+<h2 id="the-gains-what-has-been-delivered">The gains: what has been delivered</h2>
+<p>The clearest gains are in the public finances and external accounts: reserves, revenue, oil output, capital inflows and credit ratings have all improved (see the scorecard). Programme delivery is uneven, and most delivery figures come from the government or programme itself.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Stage</th>
+<th>Latest figure</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lagos-Calabar coastal highway</td>
+<td>Section 1 complete; others in progress</td>
+<td>47.47 km complete; about 400 km more in sections under construction or procurement (Oct 2026)</td>
+<td>Works Minister; cost not stated</td>
+</tr>
+<tr>
+<td>Student loans (NELFUND)</td>
+<td>Delivered, ongoing</td>
+<td>N375.28 bn disbursed (Nov 2026); about 1.39 m beneficiaries (Apr 2026)</td>
+<td>NELFUND</td>
+</tr>
+<tr>
+<td>Cash transfers</td>
+<td>Partly delivered</td>
+<td>9.18 m households paid at least once (Mar 2026), against a 15 m target</td>
+<td>Ministry figures</td>
+</tr>
+<tr>
+<td>CNG vehicles</td>
+<td>Delivered, ongoing</td>
+<td>More than 143,000 vehicles; 105 refuelling stations (Q3 2026)</td>
+<td>Programme officials</td>
+</tr>
+<tr>
+<td>State refineries</td>
+<td>Not delivered</td>
+<td>Port Harcourt, Warri and Kaduna shut (Feb 2026); NNPC seeking equity partners</td>
+<td>NNPC</td>
+</tr>
+<tr>
+<td>Tax reform</td>
+<td>In force</td>
+<td>Effective January 2026</td>
+<td>Acts signed June 2025</td>
+</tr>
+<tr>
+<td>Oil output</td>
+<td>Delivered</td>
+<td>OPEC quota met five months running (Sep 2026)</td>
+<td>NUPRC</td>
+</tr>
+<tr>
+<td>Minimum wage</td>
+<td>Delivered (federal)</td>
+<td>N70,000 from July 2024; Kano N71,000 from November 2024</td>
+<td>Act; state government</td>
+</tr>
+</tbody>
+</table>
+<p>None of these entries has been independently verified on site. Which projects were inherited from earlier administrations is still to be established.</p>
+<h2 id="what-nigerians-think">What Nigerians think</h2>
+<p>Public opinion was already very negative before May 2023 and became more so after subsidy removal. Monthly approval recovered from a low in early 2024 but stayed below half.</p>
+<ul>
+<li><strong>Direction of the country:</strong> 89% said Nigeria was going in the wrong direction in 2022 and 93% in June to July 2024 (Afrobarometer, 1,600 adults, margin of error 2.5 points). In the same 2024 survey, 88% called the economy bad and 85% disapproved of subsidy removal.</li>
+<li><strong>Approval:</strong> NOIPolls' monthly approval was 43% in June 2023, fell to 11% in February 2024, and stood at 36% to 44% in mid-2025. NOIPolls' sample sizes and question wording were not on the pages read.</li>
+<li><strong>Trust:</strong> 83% did not trust the federal government in early 2025, the lowest since tracking began in 2019 (Africa Polling Institute, 5,465 interviews).</li>
+<li><strong>2026:</strong> a non-random survey of 829 voters by SBM Intelligence (May 2026) found nearly 80% saying the country was on the wrong track, and 45% naming insecurity as the top issue. It is not comparable with Afrobarometer.</li>
+</ul>
+<p>No random-sample survey with a published method after mid-2025 was found.</p>
+<h2 id="nigeria-and-its-peers">Nigeria and its peers</h2>
+<p>High inflation after 2022 was not unique to Nigeria. Peers that went through currency or debt crises have brought inflation down faster; Nigeria's growth outlook is close to the regional average.</p>
+<table>
+<thead>
+<tr>
+<th>Country</th>
+<th>Inflation, May 2023</th>
+<th>Latest inflation</th>
+<th>IMF growth projection, 2026</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nigeria</td>
+<td>22.41%</td>
+<td>14.63% (Sep 2026, rebased)</td>
+<td>4.2%</td>
+</tr>
+<tr>
+<td>Ghana</td>
+<td>42.2%</td>
+<td>5.5% (Oct 2026)</td>
+<td>5.2%</td>
+</tr>
+<tr>
+<td>Egypt (urban)</td>
+<td>32.7%</td>
+<td>12.7% (Oct 2026)</td>
+<td>4.2% (April projection)</td>
+</tr>
+<tr>
+<td>Kenya</td>
+<td>8.0%</td>
+<td>7.3% (Oct 2026)</td>
+<td>4.5%</td>
+</tr>
+<tr>
+<td>South Africa</td>
+<td></td>
+<td></td>
+<td>1.0%</td>
+</tr>
+<tr>
+<td>Sub-Saharan Africa</td>
+<td></td>
+<td></td>
+<td>4.5%</td>
+</tr>
+</tbody>
+</table>
+<p>Ghana and Egypt started from higher inflation and had IMF-backed programmes; Kenya had no comparable shock. A fair comparison also needs each currency's fall against the dollar and each country's debt ratio, which are still to be added.</p>
+<p><strong>External conditions.</strong> Oil prices were lower in 2023 than 2022 and fell again in 2025, then rose in 2026. Higher oil prices lift Nigeria's revenue and reserves but raise the cost of imported fuel. The IMF projects global inflation of 4.7% and global growth of 3.1% in 2026. Domestic policy most plausibly explains the size of the naira's fall and the jump in petrol prices after the 2023 reforms; external conditions weigh heavily on oil revenue, imported food and fertiliser, and the cost of foreign borrowing.</p>
+<h2 id="claims-and-evidence">Claims and evidence</h2>
+<p>Sixteen public claims were tested against the data, ten from government and six from the opposition, using the same four verdicts.</p>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Claimant</th>
+<th>Verdict</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The economy has moved beyond stabilisation, with 4.43% growth</td>
+<td>President Tinubu, Sep 2026</td>
+<td>Partly supported</td>
+<td>Growth and reserves are up; poverty is estimated at 63% and food inflation is 19.59%</td>
+</tr>
+<tr>
+<td>Petrol subsidy removed and not reinstated</td>
+<td>NNPC, 2024</td>
+<td>Partly supported</td>
+<td>IMF: implicit subsidy of about N8.43 trn in 2024, ended October 2024</td>
+</tr>
+<tr>
+<td>Cash transfers reach 15 m households</td>
+<td>Finance Minister, Oct 2025</td>
+<td>Not supported</td>
+<td>9.18 m paid at least once (Mar 2026)</td>
+</tr>
+<tr>
+<td>Student loans reached about 1.5 m students</td>
+<td>NELFUND, Jun 2026</td>
+<td>Partly supported</td>
+<td>1.39 m beneficiaries (Apr 2026); later figures are applications</td>
+</tr>
+<tr>
+<td>Net reserves rose from USD 3.99 bn to USD 34.80 bn</td>
+<td>CBN Governor, Mar 2026</td>
+<td>Supported (direction)</td>
+<td>Gross reserves rose; the net figure's liabilities are not published</td>
+</tr>
+<tr>
+<td>Record N28.3 trn tax revenue in 2025</td>
+<td>Nigeria Revenue Service, Feb 2026</td>
+<td>Partly supported</td>
+<td>Revenue up to 10.2% of GDP (IMF); oil revenue missed target</td>
+</tr>
+<tr>
+<td>OPEC quota met five months running</td>
+<td>NUPRC, Oct 2026</td>
+<td>Supported</td>
+<td>1.53 m bpd crude (Sep 2026)</td>
+</tr>
+<tr>
+<td>Terror-related deaths down 81% since 2015</td>
+<td>President Tinubu, Jun 2026</td>
+<td>Cannot be verified</td>
+<td>No source; tracker deaths rose 2023 to 2025</td>
+</tr>
+<tr>
+<td>Security situation scores 65% to 70%</td>
+<td>Defence Minister, May 2026</td>
+<td>Cannot be verified</td>
+<td>No published dataset</td>
+</tr>
+<tr>
+<td>World Bank poverty figures are unrealistic</td>
+<td>Presidential adviser, 2026</td>
+<td>Not supported</td>
+<td>World Bank and IMF both put poverty at 63% (2025)</td>
+</tr>
+<tr>
+<td>Public debt has reached about N200 trn</td>
+<td>Peter Obi, 2026</td>
+<td>Not supported</td>
+<td>DMO: N166.79 trn (Jun 2026)</td>
+</tr>
+<tr>
+<td>Interest took 124% of revenue in H1 2026</td>
+<td>Peter Obi, Oct 2026</td>
+<td>Cannot be verified</td>
+<td>Cited World Bank report not yet read; IMF projects about 54% for 2026</td>
+</tr>
+<tr>
+<td>External borrowing reached USD 30 bn in three years</td>
+<td>Atiku Abubakar, May 2026</td>
+<td>Cannot be verified</td>
+<td>Net external debt rose about USD 8.7 bn; gross borrowing not published</td>
+</tr>
+<tr>
+<td>Cash-transfer reach was overstated</td>
+<td>Atiku Abubakar, Aug 2026</td>
+<td>Supported</td>
+<td>Officials cited 15 m and about 10 m; data show 9.18 m</td>
+</tr>
+<tr>
+<td>70% of Nigerians have rejected the President</td>
+<td>ADC, May 2026</td>
+<td>Not supported</td>
+<td>The cited poll shows 47.5% disapproval</td>
+</tr>
+<tr>
+<td>Petrol subsidy was renamed, not removed</td>
+<td>Atiku Abubakar, Aug 2026</td>
+<td>Partly supported</td>
+<td>Implicit subsidy to October 2024 (IMF)</td>
+</tr>
+</tbody>
+</table>
+<p>Tally: government claims 2 supported, 4 partly supported, 2 cannot be verified, 2 not supported. Opposition claims 1 supported, 1 partly supported, 2 cannot be verified, 2 not supported. Full evidence and links are in claims.csv.</p>
+<h2 id="the-citizens-evidence-checklist">The citizen's evidence checklist</h2>
+<p>A neutral guide for weighing the record and comparing it with what any party or candidate proposes. It endorses no one.</p>
+<p><strong>Verified accomplishments:</strong> reserves up 57%; revenue up from 7.3% to 10.2% of GDP; oil output meeting the OPEC quota; inflation down from its December 2024 peak; credit ratings upgraded by all three agencies; fewer grid collapses a year than in 2015 to 2022 (press counts).</p>
+<p><strong>Measurable adverse outcomes:</strong> naira down about 66% against the dollar; petrol up about 570%; poverty estimated up from 56% to 63%; recorded deaths up from 4,416 to 6,518 a year; state refineries shut; debt service about 23% of the 2026 budget against 5.2% for health.</p>
+<p><strong>Policies with mixed effects:</strong> subsidy removal (fiscal savings, much higher fuel costs); exchange-rate unification (more reserves, dearer imports); high interest rates (lower inflation alongside dearer credit); Band A tariffs (smaller subsidy, triple the price); cash transfers (9.18 m households paid, short of 15 m).</p>
+<p><strong>Promises awaiting implementation:</strong> 15 m households on cash transfers; the rest of the coastal highway; working state refineries; a new pay law for office holders.</p>
+<p><strong>Outcomes needing more time:</strong> the 2026 tax reform; student-loan repayment; whether CNG lowers fares; whether 4% growth reaches household incomes.</p>
+<p><strong>Questions the evidence cannot yet answer:</strong> current unemployment; current poverty from a survey; the trend in out-of-school children; an official trend in killings and abductions.</p>
+<p><strong>Questions to ask any candidate or party:</strong></p>
+<ol>
+<li>Which of these indicators would you change first, by how much and by when?</li>
+<li>How would you pay for it?</li>
+<li>Would you keep, reverse or change subsidy removal and the floating exchange rate, and at what cost?</li>
+<li>What would you do about the share of revenue spent on interest?</li>
+<li>How would you measure security and publish the data?</li>
+<li>Would you restart regular unemployment and household surveys?</li>
+<li>Which of your promises can citizens check, and where?</li>
+<li>What did you or your party deliver when last in office, on the same measures?</li>
+</ol>
+<h2 id="gaps-and-the-next-edition">Gaps and the next edition</h2>
+<p>This is a first, minimum version. These gaps will be filled in later editions:</p>
+<ul>
+<li><strong>Household profiles:</strong> incomes and costs for nine of the fourteen profiles (author to supply).</li>
+<li><strong>Official data not published:</strong> unemployment since Q2 2024; a household poverty survey since 2022/23; an official security dataset.</li>
+<li><strong>Data to obtain:</strong> ACLED abduction and fatality counts after 2022; peer currency and debt figures from the IMF; Brent oil price averages; distribution-company loss baselines for 2023.</li>
+<li><strong>Claims to resolve:</strong> the World Bank report behind the interest-to-revenue claim; gross external borrowing since 2023.</li>
+<li><strong>Upgrades:</strong> figures sourced from press reports to be checked against the publishers' own releases before wide circulation.</li>
+<li><strong>Outside review:</strong> this edition has not been reviewed by anyone outside the project.</li>
+</ul>
+<p>The underlying data (values, sources, claims and assumptions) are published as open CSV files so that anyone can check or reuse them.</p></article></div></body>
+</html>

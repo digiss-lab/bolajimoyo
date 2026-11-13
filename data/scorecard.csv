@@ -1,0 +1,19 @@
+id,indicator,baseline_label,baseline,latest_label,latest,unit,change_kind,good,note,source
+fx,Naira's value in US dollars,May 2023,464.67,6 Nov 2026,1350.45,NGN per USD,value,up,Official rate; change is in the naira's dollar value,FMDQ / CBN
+inflation,Headline inflation,May 2023,22.41,Sep 2026,14.63,%,pp,down,Peak 34.80% (Dec 2024); series rebased 2025,NBS
+reserves,Gross external reserves,May 2023,35.15,Oct 2026,55.22,USD bn,pct,up,,CBN
+petrol,Petrol price,May 2023,238.11,May 2026,1596.25,NGN per litre,pct,down,National average,NBS
+poverty,Poverty rate,2023,56,2025,63,% of people,pp,down,World Bank; 2024-25 are model estimates,World Bank
+debt,Total public debt,Jun 2023,87.38,Jun 2026,166.79,NGN trn,pct,down,Much of the rise is the naira's fall,DMO
+gdp,Real GDP growth,2023,3.04,Q2 2026,4.43,%,pp,up,Rebased series,NBS
+food,Food inflation,May 2023,24.82,Sep 2026,19.59,%,pp,down,Peak 39.84% (Dec 2024),NBS
+debt_gdp,Debt to GDP,2023,36.3,2025,36.1,% of GDP,pp,down,,IMF
+revenue,Government revenue,2023,7.3,2025,10.2,% of GDP,pp,up,,IMF
+interest,Interest to FGN revenue,2023,83.8,2026 (proj.),53.7,%,pp,down,,IMF
+min_wage,National minimum wage,May 2023,30000,Jul 2024,70000,NGN per month,pct,up,,Minimum Wage Acts
+mpr,Monetary policy rate,May 2023,18.5,Sep 2026,23.0,%,pp,none,Peak 27.5%,CBN
+oil,Crude oil output,May 2023,1.18,Sep 2026,1.53,m barrels a day,pct,up,Crude only,NUPRC
+grid,Grid capacity available,Q2 2023,4388,Q1 2026,4458,MW,pct,up,"Peak 5,400 MW in Q4 2025",NERC
+deaths,Deaths recorded by tracker,2023,4416,2025,6518,deaths a year,pct,down,Mass Atrocities Tracker,Mass Atrocities Tracker
+cpi_ti,Corruption Perceptions Index,2022,24,2025,26,score of 100,pp,up,"Perceptions, not cases",Transparency International
+unemployment,Unemployment,Q2 2023,4.2,Q2 2024,4.3,%,pp,down,No NBS release since Q2 2024,NBS

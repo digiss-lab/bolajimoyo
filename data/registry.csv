@@ -1,0 +1,75 @@
+series_id,name,publisher,unit,frequency,retrieval_tier,primary_location,dashboard_module,notes
+gdp_real_growth,Real GDP growth (2019 base),NBS,percent y/y,quarterly and annual,file,NBS GDP reports (nigerianstat.gov.ng),scorecard; trends,Rebased series from 2019; old 2010-base figures not comparable
+gdp_nominal,Nominal GDP (2019 base),NBS,NGN trillion,annual,file,NBS GDP reports (nigerianstat.gov.ng),scorecard,Rebasing raised 2019-2024 levels by about 35% to 42%
+cpi_headline,Headline inflation,NBS,percent y/y,monthly,file,NBS CPI reports (nigerianstat.gov.ng),scorecard; trends,Series break Jan 2025 (base 2009 to 2024) and re-referencing Jan 2026
+cpi_food,Food inflation,NBS,percent y/y,monthly,file,NBS CPI reports (nigerianstat.gov.ng),scorecard; household,Same breaks as headline
+cpi_core,Core inflation (excl. farm produce and energy),NBS,percent y/y,monthly,file,NBS CPI reports (nigerianstat.gov.ng),trends,Same breaks as headline
+mpr,Monetary policy rate,CBN,percent,per MPC meeting,document,CBN MPC communiques (cbn.gov.ng),trends,
+fx_official,Official exchange rate (I&E window to June 2023; NFEM later),CBN / FMDQ,NGN per USD,daily,file,CBN and FMDQ rate pages,scorecard; trends,Window names changed after June 2023 unification
+fx_parallel,Parallel-market exchange rate,Private trackers and press,NGN per USD,daily,document,Press reports,trends,Indicative only; collection method undisclosed
+reserves,Gross external reserves,CBN,USD billion,daily,file,CBN reserves page (cbn.gov.ng),scorecard; trends,
+debt_total,Total public debt (FGN + states + FCT),DMO,NGN trillion and USD billion,quarterly,file,DMO debt profile (dmo.gov.ng),debt,Naira value moves with exchange rate; Ways and Means added June 2023
+debt_service_revenue,Debt service to revenue ratio,World Bank / DMO / IMF,percent,annual,document,World Bank NDU; IMF Article IV,debt,Definitions differ by source (FGN retained revenue vs consolidated)
+subsidy_pms,Petrol subsidy cost (under-recovery),NNPC / FAAC,NGN trillion,annual,document,NNPC submissions to FAAC,fuel timeline,Not published monthly after mid-2022
+fiscal_deficit,Fiscal deficit,World Bank / Budget Office,percent of GDP,annual,document,World Bank NDU; Budget Office reports,revenue,Pre-rebasing GDP denominators in older estimates
+capital_importation,Capital importation,NBS,USD billion,quarterly,file,NBS capital importation reports,scorecard,Records inflows through banks; not the same as balance-of-payments FDI
+credit_rating,Sovereign credit ratings,Moody's / S&P / Fitch,rating grade,event,document,Agency press releases,scorecard,
+oil_production,Crude oil production (excl. condensate),NUPRC,barrels per day,monthly,file,NUPRC production reports,scorecard; fuel timeline,Report crude and crude-plus-condensate separately
+price_pms,Petrol average retail price,NBS,NGN per litre,monthly,file,NBS PMS Price Watch,household; fuel timeline,Survey of retail prices; official pump price may differ
+price_ago,Diesel average retail price,NBS,NGN per litre,monthly,file,NBS AGO Price Watch,household,
+price_lpg,Cooking gas 12.5kg refill average price,NBS,NGN per refill,monthly,file,NBS LPG Price Watch,household,
+price_kerosene,Kerosene average retail price,NBS,NGN per litre,monthly,file,NBS Kerosene Price Watch,household,
+min_wage,National minimum wage,Federal Government (Act),NGN per month,event,document,National Minimum Wage Act,household,Coverage excludes employers with fewer than 25 workers
+power_capacity,Average available grid generation capacity,NERC,MW,quarterly,document,NERC quarterly reports (nerc.gov.ng),electricity,
+power_subsidy,Electricity tariff subsidy,NERC,NGN billion,quarterly,document,NERC quarterly reports (nerc.gov.ng),electricity,
+poverty_national,Poverty rate (national poverty line),NBS survey / World Bank estimates,percent of population,irregular,document,NBS NLSS; World Bank NDU,welfare,Post-2023 values are model estimates
+poverty_mpi,Multidimensional poverty,NBS,percent of population,irregular,document,NBS MPI report,welfare,
+unemployment,Unemployment rate,NBS,percent of labour force,quarterly,file,NBS Labour Force Survey,welfare,Method changed 2023; old and new not comparable
+food_insecurity,People in Cadre Harmonise Phase 3 or worse,Cadre Harmonise (FAO/CILSS/government),people (millions),twice yearly,document,Cadre Harmonise fiches,security and welfare,Coverage of states varies by round
+conflict_events,Political violence and protest events,ACLED,events,continuous,api,ACLED data export,security and welfare,ACLED revises past data; record extraction date
+conflict_fatalities,Reported fatalities from political violence,ACLED,reported fatalities,continuous,api,ACLED data export,security and welfare,ACLED revises past data; record extraction date
+idps,Internally displaced persons,IOM DTM,people,per round,document,IOM DTM reports,security and welfare,North-East and North-West/North-Central rounds run on different schedules
+kidnapping,Kidnapping incidents (household survey),NBS CESPS,incidents,irregular,document,NBS Crime Experience and Security Perception Survey,security and welfare,First round covers May 2023 to Apr 2024
+electricity_tariff,Electricity tariff by band,NERC,NGN per kWh,event,document,NERC tariff orders,electricity,PENDING: baseline not yet sourced
+gdp_per_capita_usd,GDP per capita,World Bank / IMF,USD,annual,api,World Bank WDI; IMF WEO,scorecard,PENDING: rebased values and exchange-rate choice to settle
+out_of_school,Out-of-school children,UNESCO / UBEC,children,irregular,document,UNESCO UIS; UBEC,education,PENDING: baseline not yet sourced
+tax_to_gdp,Tax revenue to GDP,IMF / FIRS,percent,annual,document,IMF Article IV,revenue,PENDING: baseline not yet sourced
+refining_output,Domestic refining output,NMDPRA / NNPC,litres per day,monthly,document,NMDPRA fact sheets,fuel timeline,PENDING: baseline not yet sourced
+abductions_nst,People abducted (press-based count),Nigeria Security Tracker (Council on Foreign Relations),people,annual,document,NST data as reported by HumAngle,security and welfare,Press-based; confirm tracker is still maintained before relying on post-2023 values
+violent_deaths_nw,Violent deaths by cause incl. banditry and kidnapping,Nigeria Watch,deaths,annual,document,Nigeria Watch annual reports (nigeriawatch.org),security and welfare,Press-based; categories overlap in state tables so use national cause totals only
+abduction_events_acled,Abduction and kidnapping events,ACLED,events,continuous,api,ACLED data export (free registration required),security and welfare,PENDING: annual counts need an ACLED data export; GI-TOC/ACLED brief reports 662 North-West events 2019-2023 rising to 2022 then falling in 2023
+interest_revenue_fgn,Interest payments to federal government revenue,IMF,percent,annual,document,IMF Article IV Table 1,debt,Replaces debt_service_revenue as the consistent series
+debt_gdp,Public gross debt to GDP,IMF,percent of GDP,annual,document,IMF Article IV Table 1,debt,Rebased GDP denominator
+cg_revenue_gdp,Consolidated government revenue to GDP,IMF,percent of GDP,annual,document,IMF Article IV Tables 1 and 3,revenue,
+cg_balance_gdp,Consolidated government overall balance,IMF,percent of GDP,annual,document,IMF Article IV Table 3,revenue,Above-the-line measure
+wage_kano_state,Kano State minimum wage,Kano State Government,NGN per month,event,document,Press reports; state circulars,household profiles,
+pension_fgn_dbs,Federal DB scheme pension adjustment,PTAD,NGN per month,event,document,PTAD statements,household profiles,Definition disputed between sources
+pay_senator_rmafc,Senator regular monthly pay (RMAFC),RMAFC,NGN per month,event,document,RMAFC disclosures,household profiles,Excludes running costs and tenure-based payments
+fee_uniport,UNIPORT tuition,University of Port Harcourt,NGN per session,annual,document,University fee schedule,household profiles,Upgrade to official schedule
+fee_rsu,RSU tuition,Rivers State University,NGN per session,annual,document,University fee schedule,household profiles,Upgrade to official schedule
+price_npk_201010,NPK 20:10:10 fertiliser,Market reports,NGN per 50kg bag,irregular,document,Press reports,household profiles,
+pay_nurse_state,State-hospital nurse pay range,Unofficial guides,NGN per month,irregular,document,Press reports,household profiles,Replace with CONHESS table
+disco_atc_loss,"DisCo aggregate technical, commercial and collection losses",NERC,percent,quarterly,document,NERC quarterly reports,electricity,
+grid_collapses,National grid collapses,TCN / press compilations,collapses,annual,document,Press reports; Intelpoint,electricity,No official annual count found; definitions vary
+grid_collapses_avg,Average grid collapses per year by administration,Intelpoint,collapses per year,irregular,document,Intelpoint,electricity,
+budget_health_share,Health share of FGN budget,Budget Office / press,percent,annual,document,Appropriation Acts,public services,Abuja Declaration target 15%
+budget_education_share,Education share of FGN budget,Budget Office / press,percent,annual,document,Appropriation Acts,public services,UNESCO benchmark 15-20%
+ti_cpi,Corruption Perceptions Index,Transparency International,score (rank),annual,document,transparency.org,governance,
+rsf_rank,World Press Freedom Index rank,Reporters Without Borders,rank,annual,document,rsf.org,governance,
+poll_wrong_direction,Share saying country going in wrong direction,Afrobarometer / SBM,percent,irregular,document,Afrobarometer releases,public opinion,Different methods; do not chain across pollsters
+poll_subsidy_disapprove,Disapproval of fuel subsidy removal,Afrobarometer,percent,irregular,document,Afrobarometer releases,public opinion,
+poll_approval_noi,Monthly governance approval,NOIPolls,percent,monthly,document,noi-polls.com,public opinion,Sample and question to confirm
+poll_approval_ebda,Presidential approval,Eagle Badger Data Analytics,percent,irregular,document,Press reports,public opinion,Method undisclosed
+poll_trust_api,Distrust of federal government,Africa Polling Institute,percent,annual,document,API Social Cohesion Survey,public opinion,
+peer_inflation_gha,Ghana headline inflation,Ghana Statistical Service,percent y/y,monthly,document,statsghana.gov.gh,peer comparison,
+peer_inflation_egy,Egypt urban inflation,CAPMAS,percent y/y,monthly,document,capmas.gov.eg,peer comparison,
+peer_inflation_ken,Kenya inflation,KNBS,percent y/y,monthly,document,knbs.or.ke,peer comparison,
+peer_growth_proj_2026,IMF 2026 growth projection by country,IMF WEO,percent,twice yearly,api,IMF DataMapper,peer comparison,period field holds ISO country code
+debt_external_usd,External debt stock,DMO,USD billion,quarterly,file,dmo.gov.ng,debt,
+infra_coastal_hwy,Lagos-Calabar coastal highway progress,Federal Ministry of Works,km,irregular,document,Ministerial briefings,gains tracker,Ministerial claims; needs independent verification
+infra_cng_vehicles,Vehicles running on CNG,Presidential CNG Initiative,vehicles,irregular,document,PiCNG statements,gains tracker,
+refineries_status,State refineries operating status,NNPC Ltd,status,event,document,NNPC statements,gains tracker,
+tax_reform,Tax reform acts,Federal Government,status,event,document,Gazetted acts,gains tracker,
+budget_debt_service,Debt service in FGN budget,Budget Office / BudgIT,NGN trillion,annual,document,Appropriation Acts,debt,
+faac_total,FAAC distributions to all tiers,NEITI / FAAC,NGN trillion,annual,document,NEITI FAAC reviews,pain-to-gain test,
+palliatives_2023,Subsidy-removal relief measures announced,Presidency / press,status,event,document,Press compilations,pain-to-gain test,

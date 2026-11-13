@@ -1,0 +1,62 @@
+series,label,period,date,value,unit,note,source
+inflation,Headline inflation,May 2023,2023-05-31,22.41,% y/y,2009 base,NBS
+inflation,Headline inflation,Dec 2023,2023-12-31,28.92,% y/y,2009 base,NBS
+inflation,Headline inflation,Dec 2024,2024-12-31,34.8,% y/y,2009 base; peak,NBS
+inflation,Headline inflation,Dec 2025,2025-12-31,15.15,% y/y,Rebased 2024 series,NBS
+inflation,Headline inflation,Sep 2026,2026-09-30,14.63,% y/y,Rebased 2024 series,NBS
+food,Food inflation,May 2023,2023-05-31,24.82,% y/y,2009 base,NBS
+food,Food inflation,Dec 2023,2023-12-31,33.93,% y/y,2009 base,NBS
+food,Food inflation,Dec 2024,2024-12-31,39.84,% y/y,2009 base; peak,NBS
+food,Food inflation,Dec 2025,2025-12-31,10.84,% y/y,Rebased 2024 series,NBS
+food,Food inflation,Sep 2026,2026-09-30,19.59,% y/y,Rebased 2024 series,NBS
+fx,Naira per US dollar (official),31 May 2023,2023-05-31,464.67,NGN,Before unification,FMDQ / CBN
+fx,Naira per US dollar (official),29 Dec 2023,2023-12-29,907.11,NGN,,CBN
+fx,Naira per US dollar (official),31 Dec 2024,2024-12-31,1535,NGN,,CBN
+fx,Naira per US dollar (official),31 Dec 2025,2025-12-31,1429,NGN,,CBN
+fx,Naira per US dollar (official),6 Nov 2026,2026-11-06,1350.45,NGN,,CBN
+reserves,Gross external reserves,25 May 2023,2023-05-25,35.15,USD bn,,CBN
+reserves,Gross external reserves,Dec 2023,2023-12-31,32.3,USD bn,,CBN
+reserves,Gross external reserves,24 Dec 2024,2024-12-24,40.85,USD bn,,CBN
+reserves,Gross external reserves,24 Dec 2025,2025-12-24,45.28,USD bn,,CBN
+reserves,Gross external reserves,30 Oct 2026,2026-10-30,55.22,USD bn,,CBN
+debt,Total public debt,Jun 2023,2023-06-30,87.38,NGN trn,Includes securitised Ways and Means,DMO
+debt,Total public debt,Dec 2023,2023-12-31,97.34,NGN trn,,DMO
+debt,Total public debt,Dec 2024,2024-12-31,144.67,NGN trn,,DMO
+debt,Total public debt,Dec 2025,2025-12-31,159.28,NGN trn,,DMO
+debt,Total public debt,Jun 2026,2026-06-30,166.79,NGN trn,,DMO
+petrol,"Petrol, average pump price",May 2023,2023-05-31,238.11,NGN per litre,Before subsidy removal,NBS
+petrol,"Petrol, average pump price",May 2024,2024-05-31,769.62,NGN per litre,,NBS
+petrol,"Petrol, average pump price",May 2025,2025-05-31,1027.76,NGN per litre,,NBS
+petrol,"Petrol, average pump price",May 2026,2026-05-31,1596.25,NGN per litre,,NBS
+mpr,Monetary policy rate,24 May 2023,2023-05-24,18.5,%,,CBN
+mpr,Monetary policy rate,Dec 2023,2023-12-31,18.75,%,,CBN
+mpr,Monetary policy rate,Dec 2024,2024-12-31,27.5,%,Peak,CBN
+mpr,Monetary policy rate,Sep 2025,2025-09-30,27.0,%,,CBN
+mpr,Monetary policy rate,24 Feb 2026,2026-02-24,26.5,%,,CBN
+mpr,Monetary policy rate,22 Sep 2026,2026-09-22,23.0,%,,CBN
+gdp,Real GDP growth,2022,2022-12-31,4.32,% y/y,Rebased 2019 series,NBS
+gdp,Real GDP growth,2023,2023-12-31,3.04,% y/y,Rebased 2019 series,NBS
+gdp,Real GDP growth,2024,2024-12-31,3.38,% y/y,Rebased 2019 series,NBS
+gdp,Real GDP growth,2025,2025-12-31,3.87,% y/y,Rebased 2019 series,NBS
+gdp,Real GDP growth,Q2 2026,2026-06-30,4.43,% y/y,"Quarter, not full year",NBS
+poverty,Poverty rate (World Bank estimate),2023,2023-12-31,56,% of people,From NLSS 2022/23 survey,World Bank
+poverty,Poverty rate (World Bank estimate),2024,2024-12-31,61,% of people,Model estimate,World Bank
+poverty,Poverty rate (World Bank estimate),2025,2025-12-31,63,% of people,Model estimate,World Bank
+interest,Interest as share of FGN revenue,2022,2022-12-31,61.2,%,,IMF
+interest,Interest as share of FGN revenue,2023,2023-12-31,83.8,%,,IMF
+interest,Interest as share of FGN revenue,2024,2024-12-31,40.8,%,,IMF
+interest,Interest as share of FGN revenue,2025,2025-12-31,53.2,%,,IMF
+interest,Interest as share of FGN revenue,2026,2026-12-31,53.7,%,IMF projection,IMF
+revenue,Government revenue,2022,2022-12-31,6.6,% of GDP,,IMF
+revenue,Government revenue,2023,2023-12-31,7.3,% of GDP,,IMF
+revenue,Government revenue,2024,2024-12-31,10.8,% of GDP,,IMF
+revenue,Government revenue,2025,2025-12-31,10.2,% of GDP,,IMF
+deaths,Deaths recorded (Mass Atrocities Tracker),2023,2023-12-31,4416,deaths,,Mass Atrocities Tracker
+deaths,Deaths recorded (Mass Atrocities Tracker),2024,2024-12-31,5353,deaths,,Mass Atrocities Tracker
+deaths,Deaths recorded (Mass Atrocities Tracker),2025,2025-12-31,6518,deaths,,Mass Atrocities Tracker
+approval,Approval of the administration (NOIPolls),Jun 2023,2023-06-30,43,% approving,,NOIPolls
+approval,Approval of the administration (NOIPolls),Feb 2024,2024-02-29,11,% approving,Low,NOIPolls
+approval,Approval of the administration (NOIPolls),Apr 2025,2025-04-30,40,% approving,,NOIPolls
+approval,Approval of the administration (NOIPolls),May 2025,2025-05-31,38,% approving,,NOIPolls
+approval,Approval of the administration (NOIPolls),Jun 2025,2025-06-30,36,% approving,,NOIPolls
+approval,Approval of the administration (NOIPolls),Jul 2025,2025-07-31,44,% approving,Conflicts with June release; to check,NOIPolls

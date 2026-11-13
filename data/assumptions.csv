@@ -1,0 +1,9 @@
+assumption_id,assumption,value,applies_to,basis,status
+A01,Monthly working hours for minimum-wage worker,173.33 (40 h x 4.333 weeks),Profile 1; hours-of-work table,Analyst convention,assumption
+A02,"Primary school fee, mid-tier urban school, May 2023","N120,000 per term per child",Profile 6,"Author: word of mouth, small sample",author-supplied
+A03,"Secondary school fee, mid-tier urban school, May 2023","N180,000 per term per child (confirmed by author 11 Nov 2026)",Profile 6,"Author: word of mouth, small sample",author-supplied
+A04,Inflation uplift May 2023 to Nov 2026,"x2.096 (chained headline CPI: May 2024 33.95%, May 2025 revised 26.06%, May 2026 15.93%; Jun-Nov 2026 at half of Sep 2026 y/y 14.63%)",School fees,"NBS CPI via Nairametrics, VON",computed
+A05,Trader/driver take-home,"N3,500 per day in May 2023; N5,500 per day in Nov 2026 (author-supplied, revised 11 Nov 2026); 26 working days",Profiles 3 and 9,Author assumption,author-supplied
+A06,Monthly remittance,USD 150,Profile 12,Author assumption,author-supplied
+A07,Rice 50kg May 2023,"Local N28,000-34,000; imported N34,000-42,000",Basket,Author: market observation,author-supplied
+A08,Electricity tariffs,"May 2023 Band A N68-71, B-E N50-65; now Band A about N209.50, Band B N61.00-68.35 per kWh",Basket; Profiles 6 and 13,Author-supplied,author-supplied

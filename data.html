@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en-NG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Open data | Nigeria Under Tinubu</title>
+<meta name="description" content="Open CSV data behind the Nigeria Under Tinubu report and dashboard, by Bolaji Moyo.">
+<meta property="og:title" content="Nigeria Under Tinubu: The Pains, the Gains, and the Evidence">
+<meta property="og:description" content="Open CSV data behind the Nigeria Under Tinubu report and dashboard, by Bolaji Moyo.">
+<meta property="og:image" content="assets/whatsapp-card.png">
+<style>
+  :root {
+    --color-bg: #f6f7f5; --color-panel: #ffffff; --color-fg: #14201a; --color-fg-muted: #4a5750;
+    --color-border-line: #dde2de; --color-ok: #0f7a4d; --color-warn: #a35f00; --color-bad: #b3261e;
+    --accent: #1f5fae;
+    --cds-chart-muted: #a7b0ab; --cds-chart-grid: #e6e9e7; --cds-chart-axis: #b9c0bc; --cds-chart-reference: #6b7670;
+    --cds-chart-status-critical: #c0392b; --cds-text-secondary: #56625c;
+    --cds-surface-popover: #ffffff; --cds-border: #d3d9d5; --cds-shadow-popover: 0 6px 20px rgba(20,32,26,.14);
+    --cds-font-size-caption: 0.8rem; --cds-font-size-body: 0.95rem; --cds-font-size-heading: 1.05rem; --cds-font-size-title: 1.6rem;
+    --cds-font-weight-medium: 600;
+    --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 14px; --cds-gap-lg: 20px; --cds-gap-xl: 40px;
+    --cds-pad-lg: 18px; --cds-radius: 10px;
+    --font-anthropic-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-anthropic-serif: Georgia, "Times New Roman", serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #0f1512; --color-panel: #18201c; --color-fg: #e8ede9; --color-fg-muted: #a3b0a8;
+      --color-border-line: #2b3631; --color-ok: #4cc38a; --color-warn: #e0a24a; --color-bad: #f07b72;
+      --accent: #6ea8ff;
+      --cds-chart-muted: #5d6963; --cds-chart-grid: #26302b; --cds-chart-axis: #46524c; --cds-chart-reference: #9aa69f;
+      --cds-chart-status-critical: #ef6f63; --cds-text-secondary: #a8b4ad;
+      --cds-surface-popover: #1f2924; --cds-border: #34413a; --cds-shadow-popover: 0 6px 20px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); }
+  body { -webkit-text-size-adjust: 100%; }
+  .site-wrap { max-width: 1120px; margin: 0 auto; padding: 20px max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+  .site-bar { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; justify-content: space-between; padding-bottom: 14px; margin-bottom: 22px; border-bottom: 1px solid var(--color-border-line); font-size: 0.85rem; }
+  .site-bar a { color: var(--color-fg); text-decoration: none; }
+  .site-bar nav { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .site-bar nav a { color: var(--color-fg-muted); }
+  .site-bar nav a:hover, .site-bar nav a:focus-visible, .site-bar nav a[aria-current] { color: var(--color-fg); text-decoration: underline; }
+  .site-brand { font-weight: 700; letter-spacing: .02em; }
+  .dash-select { font: inherit; font-size: 0.9rem; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--color-border-line); background-color: var(--color-panel); color: var(--color-fg); max-width: 100%; }
+  .dash-skeleton { opacity: .4; }
+  @media (max-width: 640px) {
+    #pain-gain table, #pain-gain tbody, #pain-gain tr, #pain-gain td,
+    #claims table, #claims tbody, #claims tr, #claims td { display: block; width: 100%; box-sizing: border-box; }
+    #pain-gain thead, #claims thead { display: none; }
+    #pain-gain tr, #claims tr { padding: 10px 0; border-bottom: 1px solid var(--color-border-line); }
+    #pain-gain td, #claims td { border: 0 !important; padding: 3px 0 !important; min-width: 0 !important; }
+    #pain-gain .ng-tablewrap, #claims .ng-tablewrap { overflow-x: visible; }
+  }
+
+  .prose { max-width: 46rem; font-size: 1.02rem; line-height: 1.6; }
+  .prose h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.7rem, 5vw, 2.5rem); line-height: 1.15; margin: 0 0 .4em; text-wrap: balance; }
+  .prose h2 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 1.55rem; margin: 2.2em 0 .5em; padding-top: .6em; border-top: 1px solid var(--color-border-line); text-wrap: balance; }
+  .prose h3 { font-size: 1.1rem; margin: 1.6em 0 .4em; }
+  .prose p, .prose li { color: var(--color-fg); }
+  .prose table { display: block; overflow-x: auto; border-collapse: collapse; width: 100%; font-size: .9rem; margin: 1em 0; }
+  .prose th, .prose td { text-align: left; vertical-align: top; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--color-border-line); min-width: 7rem; }
+  .prose th { font-size: .8rem; color: var(--color-fg-muted); font-weight: 600; }
+  .prose a { color: var(--accent); }
+  .toc { font-size: .9rem; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 10px; padding: 12px 16px; margin: 1.2em 0; }
+  .toc summary { cursor: pointer; font-weight: 600; }
+  .toc ol { margin: .6em 0 0; padding-left: 1.3em; }
+  .toc a { color: var(--color-fg); }
+</style>
+</head>
+<body><div class="site-wrap"><div class="site-bar"><a class="site-brand" href="index.html">bolajimoyo.com</a><nav aria-label="Site"><a href="index.html">Dashboard</a><a href="report.html">Full report</a><a href="data.html" aria-current="page">Data</a><a href="assets/whatsapp-card.png">WhatsApp card</a></nav></div><article class="prose"><h1>Open data</h1><p>Every figure in the report and dashboard comes from these files. They are plain CSV and open in any spreadsheet. Rows in values.csv are never overwritten: revisions are added with a new edition number. Edition 2026-11-11.9.</p>
+<table><thead><tr><th>File</th><th>What it holds</th><th>Rows</th></tr></thead><tbody><tr><td><a href="data/values.csv">values.csv</a></td><td>Every value collected, with source, date, status and edition</td><td>191</td></tr><tr><td><a href="data/registry.csv">registry.csv</a></td><td>The list of indicators and who publishes them</td><td>74</td></tr><tr><td><a href="data/claims.csv">claims.csv</a></td><td>Government and opposition claims with verdicts and evidence</td><td>16</td></tr><tr><td><a href="data/basket.csv">basket.csv</a></td><td>Household price basket, May 2023 and latest</td><td>14</td></tr><tr><td><a href="data/assumptions.csv">assumptions.csv</a></td><td>Author-supplied assumptions</td><td>8</td></tr><tr><td><a href="data/scorecard.csv">scorecard.csv</a></td><td>Dashboard scorecard</td><td>18</td></tr><tr><td><a href="data/series.csv">series.csv</a></td><td>Dashboard time series</td><td>61</td></tr><tr><td><a href="data/peers.csv">peers.csv</a></td><td>Peer-country comparison</td><td>4</td></tr><tr><td><a href="data/pain_to_gain.csv">pain_to_gain.csv</a></td><td>Pain-to-gain test answers</td><td>40</td></tr><tr><td><a href="data/pain_gain_summary.csv">pain_gain_summary.csv</a></td><td>Pain-to-gain summary</td><td>4</td></tr></tbody></table>
+<p>Corrections and responses: why9ija@gmail.com.</p></article></div></body>
+</html>

@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en-NG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nigeria Under Tinubu: The Pains, the Gains, and the Evidence | Dashboard</title>
+<meta name="description" content="Nonpartisan, evidence-based dashboard on Nigeria's economy and everyday life since 29 May 2023, by Bolaji Moyo.">
+<meta property="og:title" content="Nigeria Under Tinubu: The Pains, the Gains, and the Evidence">
+<meta property="og:description" content="Scorecard, cost of living, security, peers and claims checked against evidence. By Bolaji Moyo.">
+<meta property="og:image" content="assets/whatsapp-card.png">
+<style>
+  :root {
+    --color-bg: #f6f7f5; --color-panel: #ffffff; --color-fg: #14201a; --color-fg-muted: #4a5750;
+    --color-border-line: #dde2de; --color-ok: #0f7a4d; --color-warn: #a35f00; --color-bad: #b3261e;
+    --accent: #1f5fae;
+    --cds-chart-muted: #a7b0ab; --cds-chart-grid: #e6e9e7; --cds-chart-axis: #b9c0bc; --cds-chart-reference: #6b7670;
+    --cds-chart-status-critical: #c0392b; --cds-text-secondary: #56625c;
+    --cds-surface-popover: #ffffff; --cds-border: #d3d9d5; --cds-shadow-popover: 0 6px 20px rgba(20,32,26,.14);
+    --cds-font-size-caption: 0.8rem; --cds-font-size-body: 0.95rem; --cds-font-size-heading: 1.05rem; --cds-font-size-title: 1.6rem;
+    --cds-font-weight-medium: 600;
+    --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 14px; --cds-gap-lg: 20px; --cds-gap-xl: 40px;
+    --cds-pad-lg: 18px; --cds-radius: 10px;
+    --font-anthropic-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-anthropic-serif: Georgia, "Times New Roman", serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #0f1512; --color-panel: #18201c; --color-fg: #e8ede9; --color-fg-muted: #a3b0a8;
+      --color-border-line: #2b3631; --color-ok: #4cc38a; --color-warn: #e0a24a; --color-bad: #f07b72;
+      --accent: #6ea8ff;
+      --cds-chart-muted: #5d6963; --cds-chart-grid: #26302b; --cds-chart-axis: #46524c; --cds-chart-reference: #9aa69f;
+      --cds-chart-status-critical: #ef6f63; --cds-text-secondary: #a8b4ad;
+      --cds-surface-popover: #1f2924; --cds-border: #34413a; --cds-shadow-popover: 0 6px 20px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); }
+  body { -webkit-text-size-adjust: 100%; }
+  .site-wrap { max-width: 1120px; margin: 0 auto; padding: 20px max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+  .site-bar { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; justify-content: space-between; padding-bottom: 14px; margin-bottom: 22px; border-bottom: 1px solid var(--color-border-line); font-size: 0.85rem; }
+  .site-bar a { color: var(--color-fg); text-decoration: none; }
+  .site-bar nav { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .site-bar nav a { color: var(--color-fg-muted); }
+  .site-bar nav a:hover, .site-bar nav a:focus-visible, .site-bar nav a[aria-current] { color: var(--color-fg); text-decoration: underline; }
+  .site-brand { font-weight: 700; letter-spacing: .02em; }
+  .dash-select { font: inherit; font-size: 0.9rem; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--color-border-line); background-color: var(--color-panel); color: var(--color-fg); max-width: 100%; }
+  .dash-skeleton { opacity: .4; }
+  @media (max-width: 640px) {
+    #pain-gain table, #pain-gain tbody, #pain-gain tr, #pain-gain td,
+    #claims table, #claims tbody, #claims tr, #claims td { display: block; width: 100%; box-sizing: border-box; }
+    #pain-gain thead, #claims thead { display: none; }
+    #pain-gain tr, #claims tr { padding: 10px 0; border-bottom: 1px solid var(--color-border-line); }
+    #pain-gain td, #claims td { border: 0 !important; padding: 3px 0 !important; min-width: 0 !important; }
+    #pain-gain .ng-tablewrap, #claims .ng-tablewrap { overflow-x: visible; }
+  }
+</style>
+<script src="assets/d3.v7.9.0.min.js"></script>
+<script src="assets/data.js"></script>
+
+<script>
+/* Minimal stand-in for the Claude dashboard runtime: reads the embedded CSVs,
+   runs the declared calculations and redraws on resize. */
+window.dash = (function () {
+  const raw = window.NG_DATA || {};
+  const datasets = {};
+  Object.keys(raw).forEach((id) => { datasets[id] = d3.csvParse(raw[id]); });
+  const calcs = {}, cache = {}, draws = {};
+  function data(id) {
+    if (datasets[id]) return {status: 'ok', data: datasets[id]};
+    if (calcs[id]) {
+      if (!(id in cache)) {
+        try { cache[id] = calcs[id].fn(...calcs[id].inputs.map((i) => data(i).data)); }
+        catch (e) { console.error(e); return {status: 'error', data: null, message: String(e)}; }
+      }
+      return {status: 'ok', data: cache[id]};
+    }
+    return {status: 'missing', data: []};
+  }
+  function run(name) {
+    const d = draws[name];
+    if (!d) return;
+    document.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => {
+      try { (typeof d === 'function' ? d : d.update)(el); } catch (e) { console.error(name, e); }
+    });
+  }
+  function runAll() { Object.keys(draws).forEach(run); }
+  let t;
+  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(runAll, 150); });
+  document.addEventListener('DOMContentLoaded', runAll);
+  return {
+    data,
+    calc: (id, o) => { calcs[id] = o; },
+    loader: () => {},
+    draw: (name, fn) => { if (fn) draws[name] = fn; else run(name); },
+    onData: (fn) => { document.addEventListener('DOMContentLoaded', () => fn()); },
+    colors: ['var(--accent)', '#d07a2d', '#6b5fb5', '#2f8f83'],
+    refresh: () => {}, params: () => ({}), setParams: () => {}, resetParams: () => {}, setLink: () => {}
+  };
+})();
+</script>
+
+</head>
+<body>
+<div class="site-wrap">
+  <div class="site-bar">
+    <a class="site-brand" href="index.html">bolajimoyo.com</a>
+    <nav aria-label="Site">
+      <a href="index.html" aria-current="page">Dashboard</a>
+      <a href="report.html">Full report</a>
+      <a href="data.html">Data</a>
+      <a href="assets/whatsapp-card.png">WhatsApp card</a>
+    </nav>
+  </div>
+<style>
+  /* Layout: masthead + takeaway, then stacked sections (scorecard, trends, prices, people, peers, claims), each a card grid that collapses to one column. */
+  .ng { --ng-gap: var(--cds-gap-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+  .ng-mast { display: flex; flex-direction: column; gap: var(--cds-gap-sm); max-width: 62rem; }
+  .ng-eyebrow { font-size: var(--cds-font-size-caption); letter-spacing: .08em; text-transform: uppercase; color: var(--color-fg-muted); }
+  .ng-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.1; margin: 0; text-wrap: balance; }
+  .ng-sub { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); max-width: 62ch; }
+  .ng-byline { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .ng-takeaway { margin: var(--cds-gap-sm) 0 0; font-size: 1.05rem; line-height: 1.55; max-width: 64ch; }
+  .ng-takeaway b { font-variant-numeric: tabular-nums; font-weight: var(--cds-font-weight-medium); }
+  .ng-nav { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); font-size: var(--cds-font-size-caption); }
+  .ng-nav a { color: var(--color-fg-muted); text-decoration: none; border-bottom: 1px solid var(--color-border-line); padding-bottom: 2px; }
+  .ng-nav a:hover, .ng-nav a:focus-visible { color: var(--color-fg); border-color: var(--color-fg); }
+  .ng-section { display: flex; flex-direction: column; gap: var(--cds-gap-md); scroll-margin-top: 16px; }
+  .ng-h2 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .ng-lede { margin: 0; color: var(--color-fg-muted); max-width: 66ch; line-height: 1.5; }
+  .ng-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+  .ng-card h3 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+  .ng-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--ng-gap); }
+  .ng-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); gap: var(--ng-gap); min-height: 9rem; }
+  .ng-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
+  .ng-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-transform: uppercase; letter-spacing: .06em; }
+  .ng-tile-value { font-family: var(--font-anthropic-serif); font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .ng-unit { font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-left: .35em; }
+  .ng-tile-meta { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .ng-chip { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; border: 1px solid currentColor; }
+  .ng-chip.better { color: var(--color-ok); }
+  .ng-chip.worse { color: var(--color-bad); }
+  .ng-chip.neutral { color: var(--color-fg-muted); }
+  .ng-tablewrap { overflow-x: auto; }
+  .ng-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); font-variant-numeric: tabular-nums; }
+  .ng-table th { text-align: left; font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: 6px 10px 6px 0; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .ng-table td { padding: 8px 10px 8px 0; border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+  .ng-table td.num, .ng-table th.num { text-align: right; white-space: nowrap; }
+  .ng-small { display: block; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-top: 2px; }
+  .ng-claimtext { min-width: 14rem; }
+  .ng-evidence { min-width: 16rem; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); line-height: 1.45; }
+  .ng-pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: var(--cds-font-size-caption); white-space: nowrap; border: 1px solid var(--color-border-line); }
+  .ng-pill.v-supported { color: var(--color-ok); border-color: var(--color-ok); }
+  .ng-pill.v-partly { color: var(--color-warn); border-color: var(--color-warn); }
+  .ng-pill.v-cannot { color: var(--color-fg-muted); }
+  .ng-pill.v-not { color: var(--color-bad); border-color: var(--color-bad); }
+  .ng-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+  .ng-seg { display: inline-flex; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; }
+  .ng-seg button { font: inherit; font-size: var(--cds-font-size-caption); background: transparent; color: var(--color-fg-muted); border: 0; padding: 6px 12px; cursor: pointer; }
+  .ng-seg button + button { border-left: 1px solid var(--color-border-line); }
+  .ng-seg button[aria-pressed="true"] { background: var(--color-bg); color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .ng-seg button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: -2px; }
+  .ng-counts { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); font-size: var(--cds-font-size-caption); }
+  .ng-chart { position: relative; min-height: 220px; }
+  .ng-chart.tall { min-height: 380px; }
+  .ng-chartbox { position: relative; }
+  .ng-chart svg { display: block; overflow: visible; }
+  .ng-chart text { font-family: var(--font-anthropic-sans); }
+  .ng-tick { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); }
+  .ng-val { fill: var(--color-fg); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .ng-label { fill: var(--color-fg); font-size: var(--cds-font-size-caption); }
+  .ng-gridline { stroke: var(--cds-chart-grid); stroke-width: 1; }
+  .ng-ref { stroke: var(--cds-chart-reference); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .ng-reftext { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); }
+  .ng-caption { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.45; }
+  .ng-empty { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .ng-tip { position: absolute; z-index: 5; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: 6px 10px; font-size: var(--cds-font-size-caption); color: var(--cds-text-secondary); max-width: 16rem; font-variant-numeric: tabular-nums; }
+  .ng-tip-h { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .ng-select-row { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; justify-content: space-between; }
+  .ng-foot { border-top: 1px solid var(--color-border-line); padding-top: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .ng-foot details { max-width: 70ch; }
+  .ng-foot summary { cursor: pointer; color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .ng-foot p { margin: var(--cds-gap-xs) 0 0; line-height: 1.5; }
+  .ng-pill.s-realised { color: var(--color-ok); border-color: var(--color-ok); }
+  .ng-pill.s-partly { color: var(--color-warn); border-color: var(--color-warn); }
+  .ng-pill.s-projected { color: var(--color-fg); border-style: dashed; border-color: var(--color-fg-muted); }
+  .ng-pill.s-notyet { color: var(--color-fg-muted); }
+  .ng-qnum { font-variant-numeric: tabular-nums; color: var(--color-fg-muted); margin-right: .35em; }
+  .ng-q { min-width: 12rem; font-weight: var(--cds-font-weight-medium); }
+  .ng-answer { min-width: 18rem; line-height: 1.45; }
+  [data-dash-source-state=refreshing] { opacity: .5; }
+</style>
+
+<div class="ng">
+  <header class="ng-mast" id="top">
+    <div class="ng-eyebrow">Nigeria, 29 May 2023 to 11 November 2026</div>
+    <h1 class="ng-title">Nigeria Under Tinubu: The Pains, the Gains, and the Evidence</h1>
+    <p class="ng-sub">An evidence-based examination of economic reforms, national outcomes and everyday life since May 29, 2023.</p>
+    <div class="ng-byline">By Bolaji Moyo · Edition 2026-11-11.9 · Nonpartisan · Full report at bolajimoyo.com · Corrections: why9ija@gmail.com</div>
+    <p class="ng-takeaway" id="takeaway">Since May 2023 the naira's dollar value has changed by <b data-draw="tk" data-id="fx" data-source="changes" data-field="change" data-where="id=fx">—</b>, the petrol price by <b data-draw="tk" data-id="petrol" data-source="changes" data-field="change" data-where="id=petrol">—</b> and gross reserves by <b data-draw="tk" data-id="reserves" data-source="changes" data-field="change" data-where="id=reserves">—</b>. Headline inflation went from <b data-draw="tkv" data-col="baseline" data-source="scorecard" data-field="baseline" data-where="id=inflation">—</b> to <b data-draw="tkv" data-col="latest" data-source="scorecard" data-field="latest" data-where="id=inflation">—</b>, and the poverty rate from <b data-draw="tkv" data-col="baseline" data-id="poverty" data-source="scorecard" data-field="baseline" data-where="id=poverty">—</b> to <b data-draw="tkv" data-col="latest" data-id="poverty" data-source="scorecard" data-field="latest" data-where="id=poverty">—</b>.</p>
+    <nav class="ng-nav" aria-label="Sections">
+      <a href="#scorecard">Scorecard</a>
+      <a href="#pain-gain">Pain-to-gain test</a>
+      <a href="#trends">Trends</a>
+      <a href="#prices">Cost of living</a>
+      <a href="#people">Security and opinion</a>
+      <a href="#peers">Peers</a>
+      <a href="#claims">Claims vs evidence</a>
+    </nav>
+  </header>
+
+  <section class="ng-section" id="scorecard">
+    <h2 class="ng-h2">The scorecard</h2>
+    <p class="ng-lede">The headline measures, from May 2023 (or the nearest period) to the latest figure. Green means the change is good for Nigerians, red that it is bad, whatever its sign.</p>
+    <div class="ng-tiles" data-draw="tiles" data-source="scorecard changes" id="tiles"></div>
+    <div class="ng-card" id="fullscore">
+      <h3>All indicators</h3>
+      <div class="ng-tablewrap">
+        <table class="ng-table" data-source="scorecard" data-row-key="id">
+          <thead><tr><th data-field="indicator">Indicator</th><th class="num" data-field="baseline">Then</th><th class="num" data-field="latest">Now</th><th class="num" data-source="changes" data-field="change">Change</th><th data-field="unit">Unit</th><th data-field="note">Note</th></tr></thead>
+          <tbody data-draw="scoretable"></tbody>
+        </table>
+      </div>
+      <p class="ng-caption">Changes are percentages for money amounts and percentage points (pts) for rates. The naira row shows the change in the naira's dollar value, not in the exchange rate.</p>
+    </div>
+  </section>
+
+  <section class="ng-section" id="pain-gain">
+    <h2 class="ng-h2">The pain-to-gain test</h2>
+    <p class="ng-lede">Each major reform is put to the same ten questions. Every answer is marked Realised (measured and already happened), Projected (promised or expected, not yet measurable), Partly delivered, or Not yet sourced (the evidence is not in this edition).</p>
+    <div class="ng-card" id="pg-summary-card">
+      <h3>Benefits realised and benefits still projected</h3>
+      <div class="ng-tablewrap">
+        <table class="ng-table" data-source="pain_gain_summary" data-row-key="reform_id">
+          <thead><tr><th data-field="reform">Reform</th><th data-field="realised">Benefits already realised</th><th data-field="projected">Benefits still projected</th><th data-field="cost_bearers">Who mainly absorbed the cost</th></tr></thead>
+          <tbody data-draw="pgsummary"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ng-card" id="pg-detail-card">
+      <div class="ng-controls">
+        <div class="ng-seg" role="group" aria-label="Choose a reform" id="pg-seg">
+          <button type="button" id="pg-subsidy" data-reform="subsidy" aria-pressed="true">Subsidy removal</button>
+          <button type="button" id="pg-fx" data-reform="fx" aria-pressed="false">Exchange rate</button>
+          <button type="button" id="pg-mpr" data-reform="mpr" aria-pressed="false">Interest rates</button>
+          <button type="button" id="pg-tax" data-reform="tax" aria-pressed="false">Tax reform</button>
+        </div>
+        <div class="ng-counts" data-draw="pgcounts" data-source="pg_status_counts" id="pg-counts"></div>
+      </div>
+      <h3 data-draw="pgtitle" data-source="pain_to_gain" id="pg-title">—</h3>
+      <div class="ng-tablewrap">
+        <table class="ng-table" data-source="pain_to_gain" data-row-key="row_id">
+          <thead><tr><th data-field="question">Question</th><th data-field="answer">Evidence</th><th data-field="status">Status</th></tr></thead>
+          <tbody data-draw="pgrows"></tbody>
+        </table>
+      </div>
+      <p class="ng-caption">Sources are named in each answer; full links are in the report and the data store. FAAC figures are NEITI's as reported by Leadership; relief measures are from ICIR's October 2023 record.</p>
+    </div>
+  </section>
+
+  <section class="ng-section" id="trends">
+    <h2 class="ng-h2">Trends since 2022</h2>
+    <div class="ng-card" id="trend-card">
+      <div class="ng-select-row">
+        <h3 data-draw="trend-title">—</h3>
+        <select class="dash-select" id="ng-series" aria-label="Choose an indicator">
+          <option value="inflation">Headline inflation</option>
+          <option value="food">Food inflation</option>
+          <option value="fx">Naira per US dollar</option>
+          <option value="reserves">Gross reserves</option>
+          <option value="petrol">Petrol price</option>
+          <option value="debt">Total public debt</option>
+          <option value="mpr">Monetary policy rate</option>
+          <option value="gdp">Real GDP growth</option>
+          <option value="poverty">Poverty rate</option>
+          <option value="interest">Interest to FGN revenue</option>
+          <option value="revenue">Government revenue to GDP</option>
+          <option value="deaths">Deaths recorded by tracker</option>
+          <option value="approval">Approval (NOIPolls)</option>
+        </select>
+      </div>
+      <div class="ng-chart" data-draw="trend" data-source="series" id="trend-chart"></div>
+    </div>
+  </section>
+
+  <section class="ng-section" id="prices">
+    <h2 class="ng-h2">Cost of living</h2>
+    <p class="ng-lede">Where a price rose faster than the minimum wage, the item takes more hours of minimum-wage work to buy than in May 2023. This assumes the worker actually receives the full minimum wage, which many informal and state workers do not.</p>
+    <div class="ng-card" id="afford-card">
+      <h3>Price rise by item against the minimum-wage rise</h3>
+      <div class="ng-chart tall" data-draw="afford" data-source="affordability wage_rise" id="afford-chart"></div>
+      <p class="ng-caption">Marked * = one or both prices are author-supplied from market observation and word of mouth, not NBS. Hover or tap a bar for hours of work then and now (173.33 working hours a month). National averages; Lagos and the South are usually higher.</p>
+    </div>
+  </section>
+
+  <section class="ng-section" id="people">
+    <h2 class="ng-h2">Security and public opinion</h2>
+    <div class="ng-grid2">
+      <div class="ng-card" id="deaths-card">
+        <h3>Deaths recorded each year</h3>
+        <div class="ng-chart" data-draw="deaths" data-source="series" id="deaths-chart"></div>
+        <p class="ng-caption">Mass Atrocities Tracker, compiled from reports. Nigeria publishes no official, regular security dataset, so the government's claims of improvement cannot be checked.</p>
+      </div>
+      <div class="ng-card" id="approval-card">
+        <h3>Approval of the administration</h3>
+        <div class="ng-chart" data-draw="approval" data-source="series" id="approval-chart"></div>
+        <p class="ng-caption">NOIPolls monthly polls; sample sizes and question wording were not published with these figures. Afrobarometer: 93% said the country was going in the wrong direction in mid-2024, up from 89% in 2022.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ng-section" id="peers">
+    <h2 class="ng-h2">Nigeria and its peers</h2>
+    <p class="ng-lede">Inflation, May 2023 against the latest month. Ghana and Egypt started from higher inflation and had IMF-backed programmes; Kenya had no comparable shock. Nigeria's latest figure is on a rebased series.</p>
+    <div class="ng-grid2">
+      <div class="ng-card" id="peers-card">
+        <h3>Inflation then and now</h3>
+        <div class="ng-chart" data-draw="peers" data-source="peers" id="peers-chart"></div>
+      </div>
+      <div class="ng-card" id="peers-table-card">
+        <h3>Growth outlook</h3>
+        <div class="ng-tablewrap">
+          <table class="ng-table" data-source="peers" data-row-key="country">
+            <thead><tr><th data-field="country">Country</th><th class="num" data-field="inflation_may2023">Inflation May 2023</th><th class="num" data-field="inflation_latest">Latest</th><th class="num" data-field="growth_2026_proj">IMF growth 2026</th></tr></thead>
+            <tbody data-draw="peertable"></tbody>
+          </table>
+        </div>
+        <p class="ng-caption">Growth projections from the IMF World Economic Outlook, October 2026 (Egypt: April 2026). Inflation in %.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ng-section" id="claims">
+    <h2 class="ng-h2">Claims vs evidence</h2>
+    <p class="ng-lede">Public claims by the government and the opposition, tested against the same data with the same four verdicts.</p>
+    <div class="ng-card" id="claims-card">
+      <div class="ng-controls">
+        <div class="ng-seg" role="group" aria-label="Who made the claim">
+          <button type="button" id="side-all" data-side="" aria-pressed="true">All</button>
+          <button type="button" id="side-gov" data-side="Government" aria-pressed="false">Government</button>
+          <button type="button" id="side-opp" data-side="Opposition" aria-pressed="false">Opposition</button>
+        </div>
+        <div class="ng-counts" data-draw="counts" data-source="verdict_counts" id="verdict-counts"></div>
+      </div>
+      <div class="ng-tablewrap">
+        <table class="ng-table" data-source="claims" data-row-key="claim_id">
+          <thead><tr><th data-field="claim">Claim</th><th data-field="claimant">Claimant</th><th data-field="verdict">Verdict</th><th data-field="key_evidence">Evidence</th></tr></thead>
+          <tbody data-draw="claimrows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ng-foot" id="about">
+    <details id="about-data">
+      <summary>About these figures, disclosure and right of reply</summary>
+      <p>Figures come from official statistics (NBS, CBN, DMO, NUPRC, NERC), international institutions (IMF, World Bank) and independent trackers and polls, many as reported in the Nigerian press. Methods changed during the period: GDP was rebased in 2025 and the consumer price index in 2025, so figures before and after are not strictly comparable. Some household prices are author-supplied from market observation and word of mouth and are labelled that way.</p>
+      <p>This independent research project is an initiative of Bolaji Moyo, created to improve public understanding of Nigeria's economic and social conditions under President Bola Ahmed Tinubu. It is designed to outlast the current administration, so that Nigerians can compare the performance of successive presidents on the same measures.</p>
+      <p>Bolaji Moyo sets the research direction, poses the critical questions and exercises editorial oversight. Claude, an AI model made by Anthropic, supports data gathering, analysis, comparison, explanation and visual presentation.</p>
+      <p>The project is not commissioned, funded, affiliated with or endorsed by any political party, candidate or government institution, and it does not endorse any candidate, party or voting choice. Its purpose is to present verifiable evidence, distinguish government claims from measurable outcomes, and help readers reach their own conclusions.</p>
+      <p>Every statistic, interpretation and visualisation is tied to an identifiable source. Consequential AI-generated analysis is checked by the author against its sources, and any unresolved limitations are disclosed.</p>
+      <p>Right of reply: any member of the public may submit a correction with evidence; material corrections appear in the next edition. Send corrections and responses to why9ija@gmail.com. Data are refreshed on the author's request. Full report and data: bolajimoyo.com.</p>
+    </details>
+  </footer>
+</div>
+
+<script>
+  dash.calc('changes', {
+    title: 'Change since May 2023',
+    description: 'Change from the baseline to the latest value of each scorecard indicator, and whether it is better or worse for Nigerians.',
+    inputs: ['scorecard'],
+    fn: (scorecard) => scorecard.map((indicator) => {
+      const before = +indicator.baseline, now = +indicator.latest;
+      let change;
+      if (indicator.change_kind === 'value') change = (before / now - 1) * 100;
+      else if (indicator.change_kind === 'pct') change = (now / before - 1) * 100;
+      else change = now - before;
+      const rounded = Math.round(change * 10) / 10;
+      const assessment = indicator.good === 'none' || rounded === 0 ? 'neutral'
+        : ((rounded > 0) === (indicator.good === 'up') ? 'better' : 'worse');
+      return {id: indicator.id, change: rounded, kind: indicator.change_kind === 'pp' ? 'points' : 'percent', assessment};
+    })
+  });
+
+  dash.calc('wage_rise', {
+    title: 'Minimum-wage rise',
+    description: 'Percentage rise in the national minimum wage, from N30,000 (May 2023) to N70,000 (July 2024).',
+    inputs: ['scorecard'],
+    fn: (scorecard) => {
+      const wage = scorecard.find((indicator) => indicator.id === 'min_wage');
+      return wage ? Math.round((+wage.latest / +wage.baseline - 1) * 1000) / 10 : null;
+    }
+  });
+
+  dash.calc('affordability', {
+    title: 'Price rises and hours of work',
+    description: 'For each basket item: percentage price change, and hours of minimum-wage work needed to buy it in May 2023 and now (173.33 working hours a month).',
+    inputs: ['basket', 'scorecard'],
+    fn: (basket, scorecard) => {
+      const wage = scorecard.find((indicator) => indicator.id === 'min_wage');
+      if (!wage) return [];
+      const hourlyThen = +wage.baseline / 173.33, hourlyNow = +wage.latest / 173.33;
+      return basket.map((item) => ({
+        item_id: item.item_id,
+        item: item.item,
+        unit: item.unit,
+        latest_period: item.latest_period,
+        price_change: Math.round((+item.price_latest_ngn / +item.price_may2023_ngn - 1) * 1000) / 10,
+        hours_2023: Math.round(+item.price_may2023_ngn / hourlyThen * 100) / 100,
+        hours_latest: Math.round(+item.price_latest_ngn / hourlyNow * 100) / 100,
+        author_supplied: /author/i.test(item.source_2023 + ' ' + item.source_latest) ? 'yes' : 'no'
+      }));
+    }
+  });
+
+  dash.calc('verdict_counts', {
+    title: 'Claims by verdict',
+    description: 'Number of claims with each verdict, for all claims and for government and opposition claims separately.',
+    inputs: ['claims'],
+    fn: (claims) => {
+      const sides = ['All', 'Government', 'Opposition'];
+      const verdicts = ['Supported', 'Partly supported', 'Cannot be verified', 'Not supported'];
+      const sideOf = (claim) => (String(claim.claim_id).startsWith('O') ? 'Opposition' : 'Government');
+      const verdictOf = (claim) => verdicts.find((v) => String(claim.verdict).startsWith(v)) || claim.verdict;
+      const out = [];
+      sides.forEach((side) => verdicts.forEach((verdict) => {
+        out.push({side, verdict, n: claims.filter((c) => (side === 'All' || sideOf(c) === side) && verdictOf(c) === verdict).length});
+      }));
+      return out;
+    }
+  });
+</script>
+
+<script>
+  window.ng = (() => {
+    const fmt = (v) => d3.format(',.2~f')(v);
+    const signed = (v, kind) => (v > 0 ? '+' : v < 0 ? '-' : '') + d3.format(',.1~f')(Math.abs(v)) + (kind === 'points' ? ' pts' : '%');
+    const accent = () => (dash.colors && dash.colors[0]) || 'var(--color-fg)';
+
+    function ready(el, ids) {
+      const states = ids.map((id) => dash.data(id).status);
+      if (states.every((s) => s === 'ok')) { el.classList.remove('dash-skeleton'); return true; }
+      const loading = states.some((s) => s === 'loading');
+      el.replaceChildren();
+      el.classList.toggle('dash-skeleton', loading);
+      if (el.tagName === 'TBODY') return false;
+      if (states.some((s) => s === 'error')) {
+        const p = document.createElement('p'); p.className = 'ng-empty'; p.textContent = 'Failed to load'; el.appendChild(p);
+      } else if (!loading) el.textContent = '—';
+      return false;
+    }
+
+    function tooltip(box) {
+      const t = document.createElement('div'); t.className = 'ng-tip'; t.hidden = true; box.appendChild(t);
+      return {
+        show(ev, lines) {
+          t.replaceChildren(...lines.map((s, i) => { const d = document.createElement('div'); d.textContent = s; if (i === 0) d.className = 'ng-tip-h'; return d; }));
+          t.hidden = false;
+          const b = box.getBoundingClientRect();
+          const px = (ev.touches ? ev.touches[0].clientX : ev.clientX) - b.left, py = (ev.touches ? ev.touches[0].clientY : ev.clientY) - b.top;
+          let x = px + 12; const w = t.offsetWidth;
+          if (x + w > b.width) x = Math.max(0, px - w - 12);
+          t.style.left = x + 'px'; t.style.top = Math.max(0, py - 10) + 'px';
+        },
+        hide() { t.hidden = true; }
+      };
+    }
+
+    function measure(svg, s, cls) {
+      const n = svg.append('text').attr('class', cls || 'ng-tick').text(s);
+      const w = n.node().getComputedTextLength(); n.remove(); return w;
+    }
+
+    function frame(el, H, label) {
+      el.replaceChildren();
+      const box = document.createElement('div'); box.className = 'ng-chartbox'; el.appendChild(box);
+      const W = Math.max(260, el.clientWidth || 600);
+      const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', label);
+      return {box, svg, W, H, tip: tooltip(box)};
+    }
+
+    function lineChart(el, rows, o) {
+      const parse = d3.utcParse('%Y-%m-%d');
+      const pts = rows.map((r) => ({r, date: parse(r.date), value: +r.value})).filter((p) => p.date && !isNaN(p.value)).sort((a, b) => a.date - b.date);
+      const {svg, W, H, tip} = frame(el, o.height || 260, o.label);
+      if (!pts.length) return;
+      const m = {t: 26, r: 34, b: 30, l: 34};
+      const x = d3.scaleUtc().domain(d3.extent(pts, (p) => p.date)).range([m.l, W - m.r]);
+      if (pts.length === 1) x.domain([d3.utcMonth.offset(pts[0].date, -6), d3.utcMonth.offset(pts[0].date, 6)]);
+      const y = d3.scaleLinear().domain([0, d3.max(pts, (p) => p.value) * 1.18]).nice().range([H - m.b, m.t]);
+      svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('class', 'ng-gridline').attr('x1', m.l - 8).attr('x2', W - m.r + 8).attr('y1', (d) => y(d)).attr('y2', (d) => y(d));
+      const inaug = Date.UTC(2023, 4, 29);
+      const [d0, d1] = x.domain();
+      if (inaug - d0 > 90 * 864e5 && inaug < d1) {
+        const xi = x(new Date(inaug));
+        svg.append('line').attr('class', 'ng-ref').attr('x1', xi).attr('x2', xi).attr('y1', m.t - 10).attr('y2', H - m.b);
+        svg.append('text').attr('class', 'ng-reftext').attr('x', xi + 4).attr('y', m.t - 12).text('Inauguration, 29 May 2023');
+      }
+      const ac = accent();
+      svg.append('path').datum(pts).attr('d', d3.area().x((p) => x(p.date)).y0(y(0)).y1((p) => y(p.value))).style('fill', ac).style('fill-opacity', 0.07);
+      svg.append('path').datum(pts).attr('d', d3.line().x((p) => x(p.date)).y((p) => y(p.value))).style('fill', 'none').style('stroke', ac).style('stroke-width', 2);
+      svg.append('line').attr('x1', m.l - 8).attr('x2', W - m.r + 8).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)');
+      // label a subset that fits: first, last, max, then greedily by spacing
+      const maxP = pts.reduce((a, b) => (b.value > a.value ? b : a));
+      const want = new Set([pts[0], pts[pts.length - 1], maxP]);
+      const labelled = []; const minGap = 58;
+      [...pts].sort((a, b) => (want.has(b) - want.has(a))).forEach((p) => {
+        if (labelled.every((q) => Math.abs(x(q.date) - x(p.date)) >= minGap)) labelled.push(p);
+      });
+      const g = svg.append('g');
+      pts.forEach((p, i) => {
+        const cx = x(p.date), cy = y(p.value);
+        const dot = g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', 4).style('fill', labelled.includes(p) ? ac : 'var(--color-panel)').style('stroke', ac).style('stroke-width', 2)
+          .attr('data-source', o.source).attr('data-field', 'value').attr('data-where', `series=${encodeURIComponent(p.r.series)}&date=${encodeURIComponent(p.r.date)}`);
+        const hit = g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', 14).style('fill', 'transparent').style('cursor', 'pointer');
+        const lines = [p.r.period, `${fmt(p.value)} ${p.r.unit}`].concat(p.r.note ? [p.r.note] : []).concat([`Source: ${p.r.source}`]);
+        hit.on('mouseenter mousemove', (ev) => tip.show(ev, lines)).on('mouseleave', () => tip.hide()).on('touchstart', (ev) => tip.show(ev, lines), {passive: true});
+        if (labelled.includes(p)) {
+          const anchor = i === 0 ? 'start' : i === pts.length - 1 ? 'end' : 'middle';
+          g.append('text').attr('class', 'ng-val').attr('x', cx).attr('y', cy - 10).attr('text-anchor', anchor).text(fmt(p.value))
+            .attr('data-source', o.source).attr('data-field', 'value').attr('data-where', `series=${encodeURIComponent(p.r.series)}&date=${encodeURIComponent(p.r.date)}`);
+          g.append('text').attr('class', 'ng-tick').attr('x', cx).attr('y', H - m.b + 18).attr('text-anchor', anchor).text(p.r.period);
+        }
+      });
+    }
+
+    return {fmt, signed, accent, ready, frame, lineChart, measure};
+  })();
+</script>
+
+<script>
+  dash.draw('tk', (el) => {
+    if (!ng.ready(el, ['changes'])) return;
+    const row = dash.data('changes').data.find((r) => r.id === el.dataset.id);
+    el.textContent = row ? ng.signed(row.change, row.kind) : '—';
+  });
+
+  dash.draw('tkv', (el) => {
+    if (!ng.ready(el, ['scorecard'])) return;
+    const id = el.dataset.id || 'inflation';
+    const row = dash.data('scorecard').data.find((r) => r.id === id);
+    el.textContent = row ? ng.fmt(+(el.dataset.col === 'baseline' ? row.baseline : row.latest)) + '%' : '—';
+  });
+
+  dash.draw('tiles', (el) => {
+    if (!ng.ready(el, ['scorecard', 'changes'])) return;
+    const changes = new Map(dash.data('changes').data.map((r) => [r.id, r]));
+    const ids = ['fx', 'inflation', 'reserves', 'petrol', 'poverty', 'debt'];
+    const rows = ids.map((id) => dash.data('scorecard').data.find((r) => r.id === id)).filter(Boolean);
+    const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+    el.replaceChildren(...rows.map((r) => {
+      const c = changes.get(r.id);
+      const tile = mk('div', 'ng-tile'); tile.id = `tile-${r.id}`;
+      tile.appendChild(mk('div', 'ng-tile-label', r.indicator));
+      const val = mk('div', 'ng-tile-value');
+      const num = mk('span', null, ng.fmt(+r.latest));
+      num.setAttribute('data-source', 'scorecard'); num.setAttribute('data-field', 'latest'); num.setAttribute('data-where', `id=${r.id}`);
+      val.appendChild(num); val.appendChild(mk('span', 'ng-unit', r.unit));
+      tile.appendChild(val);
+      const meta = mk('div', 'ng-tile-meta');
+      if (c) {
+        const chip = mk('span', `ng-chip ${c.assessment}`, ng.signed(c.change, c.kind));
+        chip.setAttribute('data-source', 'changes'); chip.setAttribute('data-field', 'change'); chip.setAttribute('data-where', `id=${r.id}`);
+        meta.appendChild(chip);
+      }
+      meta.appendChild(document.createTextNode(' from '));
+      const base = mk('span', null, ng.fmt(+r.baseline));
+      base.setAttribute('data-source', 'scorecard'); base.setAttribute('data-field', 'baseline'); base.setAttribute('data-where', `id=${r.id}`);
+      meta.appendChild(base);
+      meta.appendChild(document.createTextNode(` (${r.baseline_label}) to ${r.latest_label}`));
+      tile.appendChild(meta);
+      if (r.note) tile.appendChild(mk('div', 'ng-tile-meta', r.note));
+      return tile;
+    }));
+  });
+
+  dash.draw('scoretable', (tbody) => {
+    if (!ng.ready(tbody, ['scorecard', 'changes'])) return;
+    const changes = new Map(dash.data('changes').data.map((r) => [r.id, r]));
+    tbody.replaceChildren(...dash.data('scorecard').data.map((r) => {
+      const tr = document.createElement('tr'); tr.setAttribute('data-key', encodeURIComponent(r.id));
+      const td = (text, cls) => { const d = document.createElement('td'); if (cls) d.className = cls; d.textContent = text; return d; };
+      const first = td(r.indicator);
+      const per = document.createElement('span'); per.className = 'ng-small'; per.textContent = `${r.baseline_label} to ${r.latest_label} · ${r.source}`; first.appendChild(per);
+      tr.appendChild(first);
+      tr.appendChild(td(ng.fmt(+r.baseline), 'num'));
+      tr.appendChild(td(ng.fmt(+r.latest), 'num'));
+      const c = changes.get(r.id);
+      const ct = td('', 'num');
+      if (c) { const chip = document.createElement('span'); chip.className = `ng-chip ${c.assessment}`; chip.textContent = ng.signed(c.change, c.kind); ct.appendChild(chip); }
+      tr.appendChild(ct);
+      tr.appendChild(td(r.unit));
+      tr.appendChild(td(r.note || ''));
+      return tr;
+    }));
+  });
+
+  window.ngSeries = 'inflation';
+  document.querySelectorAll('#ng-series').forEach((sel) => {
+    sel.addEventListener('change', () => { window.ngSeries = sel.value; dash.draw('trend'); dash.draw('trend-title'); });
+  });
+
+  dash.draw('trend-title', (el) => {
+    if (!ng.ready(el, ['series'])) return;
+    const row = dash.data('series').data.find((r) => r.series === window.ngSeries);
+    el.textContent = row ? `${row.label} (${row.unit})` : '—';
+  });
+
+  dash.draw('trend', (el) => {
+    if (!ng.ready(el, ['series'])) return;
+    const rows = dash.data('series').data.filter((r) => r.series === window.ngSeries);
+    const label = rows.length ? `${rows[0].label}, ${rows[0].period} to ${rows[rows.length - 1].period}` : 'Trend';
+    ng.lineChart(el, rows, {height: 280, label, source: 'series'});
+    const notes = [...new Set(rows.flatMap((r) => String(r.note || '').split(';').map((n) => n.trim())).filter((n) => /base|series|projection|estimate|quarter/i.test(n)))];
+    const sources = [...new Set(rows.map((r) => r.source))];
+    const cap = document.createElement('p'); cap.className = 'ng-caption';
+    cap.textContent = `Source: ${sources.join(', ')}.` + (notes.length ? ` Method notes: ${notes.join('; ')}. Points on different bases are not strictly comparable.` : '');
+    el.appendChild(cap);
+  });
+
+  dash.draw('approval', (el) => {
+    if (!ng.ready(el, ['series'])) return;
+    ng.lineChart(el, dash.data('series').data.filter((r) => r.series === 'approval'), {height: 220, label: 'NOIPolls approval of the administration, June 2023 to July 2025', source: 'series'});
+  });
+
+  dash.draw('deaths', (el) => {
+    if (!ng.ready(el, ['series'])) return;
+    const rows = dash.data('series').data.filter((r) => r.series === 'deaths');
+    const {svg, W, H, tip} = ng.frame(el, 220, 'Deaths recorded by the Mass Atrocities Tracker by year');
+    if (!rows.length) return;
+    const m = {t: 24, r: 8, b: 28, l: 8};
+    const x = d3.scaleBand().domain(rows.map((r) => r.period)).range([m.l, W - m.r]).padding(0.35);
+    const y = d3.scaleLinear().domain([0, d3.max(rows, (r) => +r.value) * 1.15]).range([H - m.b, m.t]);
+    rows.forEach((r, i) => {
+      const last = i === rows.length - 1;
+      const bar = svg.append('rect').attr('x', x(r.period)).attr('width', x.bandwidth()).attr('y', y(+r.value)).attr('height', y(0) - y(+r.value)).attr('rx', 2)
+        .style('fill', last ? ng.accent() : 'var(--cds-chart-muted)')
+        .attr('data-source', 'series').attr('data-field', 'value').attr('data-where', `series=deaths&date=${encodeURIComponent(r.date)}`);
+      const lines = [r.period, `${ng.fmt(+r.value)} deaths recorded`, `Source: ${r.source}`];
+      bar.on('mouseenter mousemove', (ev) => tip.show(ev, lines)).on('mouseleave', () => tip.hide()).on('touchstart', (ev) => tip.show(ev, lines), {passive: true});
+      svg.append('text').attr('class', 'ng-val').attr('x', x(r.period) + x.bandwidth() / 2).attr('y', y(+r.value) - 6).attr('text-anchor', 'middle').text(ng.fmt(+r.value))
+        .attr('data-source', 'series').attr('data-field', 'value').attr('data-where', `series=deaths&date=${encodeURIComponent(r.date)}`);
+      svg.append('text').attr('class', 'ng-tick').attr('x', x(r.period) + x.bandwidth() / 2).attr('y', H - m.b + 18).attr('text-anchor', 'middle').text(r.period);
+    });
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)');
+  });
+
+  dash.draw('afford', (el) => {
+    if (!ng.ready(el, ['affordability', 'wage_rise'])) return;
+    const rows = [...dash.data('affordability').data].sort((a, b) => b.price_change - a.price_change);
+    const wage = dash.data('wage_rise').data;
+    const rowH = 26, m = {t: 34, r: 56, b: 12};
+    const H = m.t + rows.length * rowH + m.b;
+    const {svg, W, tip} = ng.frame(el, H, 'Price change by item compared with the minimum-wage rise');
+    const name = (r) => r.item + (r.author_supplied === 'yes' ? ' *' : '');
+    const left = Math.min(W * 0.45, d3.max(rows, (r) => ng.measure(svg, name(r), 'ng-label')) + 12);
+    const x = d3.scaleLinear().domain([0, Math.max(d3.max(rows, (r) => r.price_change), wage || 0) * 1.05]).range([left, W - m.r]);
+    rows.forEach((r, i) => {
+      const yy = m.t + i * rowH;
+      const over = wage != null && r.price_change > wage;
+      svg.append('text').attr('class', 'ng-label').attr('x', left - 8).attr('y', yy + rowH / 2 + 4).attr('text-anchor', 'end').text(name(r));
+      const w = Math.max(1, x(Math.max(0, r.price_change)) - x(0));
+      const bar = svg.append('rect').attr('x', x(0)).attr('y', yy + 5).attr('width', w).attr('height', rowH - 10).attr('rx', 2)
+        .style('fill', over ? 'var(--cds-chart-status-critical)' : 'var(--cds-chart-muted)').style('fill-opacity', over ? 0.7 : 1)
+        .attr('data-source', 'affordability').attr('data-field', 'price_change').attr('data-where', `item_id=${encodeURIComponent(r.item_id)}`);
+      const lines = [`${r.item} (${r.unit})`, `Price change: ${ng.signed(r.price_change, 'percent')} to ${r.latest_period}`, `Hours of minimum-wage work: ${ng.fmt(r.hours_2023)} then, ${ng.fmt(r.hours_latest)} now`].concat(r.author_supplied === 'yes' ? ['Author-supplied price'] : []);
+      bar.on('mouseenter mousemove', (ev) => tip.show(ev, lines)).on('mouseleave', () => tip.hide()).on('touchstart', (ev) => tip.show(ev, lines), {passive: true});
+      svg.append('text').attr('class', 'ng-val').attr('x', x(0) + w + 6).attr('y', yy + rowH / 2 + 4).text(ng.signed(r.price_change, 'percent'))
+        .attr('data-source', 'affordability').attr('data-field', 'price_change').attr('data-where', `item_id=${encodeURIComponent(r.item_id)}`);
+    });
+    if (wage != null) {
+      const xw = x(wage);
+      svg.append('line').attr('class', 'ng-ref').attr('x1', xw).attr('x2', xw).attr('y1', m.t - 8).attr('y2', H - m.b);
+      const t = svg.append('text').attr('class', 'ng-reftext').attr('y', m.t - 14).text(`Minimum wage ${ng.signed(wage, 'percent')}`).attr('data-source', 'wage_rise');
+      const tw = t.node().getComputedTextLength();
+      t.attr('x', Math.min(xw - tw / 2, W - tw - 2)).attr('x', Math.max(left, Math.min(xw - tw / 2, W - tw - 2)));
+    }
+  });
+
+  dash.draw('peers', (el) => {
+    if (!ng.ready(el, ['peers'])) return;
+    const rows = dash.data('peers').data;
+    const rowH = 42, m = {t: 30, r: 30, b: 26};
+    const H = m.t + rows.length * rowH + m.b;
+    const {svg, W, tip} = ng.frame(el, H, 'Inflation in May 2023 and the latest month, Nigeria and peers');
+    const left = Math.min(W * 0.4, d3.max(rows, (r) => ng.measure(svg, r.country, 'ng-label')) + 14);
+    const x = d3.scaleLinear().domain([0, d3.max(rows, (r) => Math.max(+r.inflation_may2023, +r.inflation_latest)) * 1.08]).nice().range([left, W - m.r]);
+    svg.append('g').selectAll('line').data(x.ticks(4)).join('line').attr('class', 'ng-gridline').attr('x1', (d) => x(d)).attr('x2', (d) => x(d)).attr('y1', m.t - 6).attr('y2', H - m.b);
+    svg.append('g').selectAll('text').data(x.ticks(4)).join('text').attr('class', 'ng-tick').attr('x', (d) => x(d)).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text((d) => d + '%');
+    const ac = ng.accent();
+    svg.append('circle').attr('cx', left).attr('cy', 12).attr('r', 4).style('fill', 'var(--cds-chart-muted)');
+    svg.append('text').attr('class', 'ng-tick').attr('x', left + 8).attr('y', 16).text('May 2023');
+    svg.append('circle').attr('cx', left + 84).attr('cy', 12).attr('r', 4).style('fill', ac);
+    svg.append('text').attr('class', 'ng-tick').attr('x', left + 92).attr('y', 16).text('Latest');
+    rows.forEach((r, i) => {
+      const yy = m.t + i * rowH + rowH / 2;
+      const a = +r.inflation_may2023, b = +r.inflation_latest;
+      svg.append('text').attr('class', 'ng-label').attr('x', left - 10).attr('y', yy + 4).attr('text-anchor', 'end').text(r.country);
+      svg.append('line').attr('x1', x(a)).attr('x2', x(b)).attr('y1', yy).attr('y2', yy).style('stroke', 'var(--cds-chart-muted)').style('stroke-width', 2);
+      const lines = [r.country, `May 2023: ${ng.fmt(a)}%`, `${r.latest_month}: ${ng.fmt(b)}%`, r.note];
+      [[a, 'inflation_may2023', 'var(--cds-chart-muted)'], [b, 'inflation_latest', ac]].forEach(([v, field, fill]) => {
+        const c = svg.append('circle').attr('cx', x(v)).attr('cy', yy).attr('r', 6).style('fill', fill)
+          .attr('data-source', 'peers').attr('data-field', field).attr('data-where', `country=${encodeURIComponent(r.country)}`);
+        c.on('mouseenter mousemove', (ev) => tip.show(ev, lines)).on('mouseleave', () => tip.hide()).on('touchstart', (ev) => tip.show(ev, lines), {passive: true});
+      });
+      const hi = Math.max(a, b), lo = Math.min(a, b);
+      svg.append('text').attr('class', 'ng-val').attr('x', x(hi) + 10).attr('y', yy + 4).text(ng.fmt(hi) + '%')
+        .attr('data-source', 'peers').attr('data-field', hi === a ? 'inflation_may2023' : 'inflation_latest').attr('data-where', `country=${encodeURIComponent(r.country)}`);
+      if (x(hi) - x(lo) > 44) svg.append('text').attr('class', 'ng-val').attr('x', x(lo) - 10).attr('y', yy + 4).attr('text-anchor', 'end').text(ng.fmt(lo) + '%')
+        .attr('data-source', 'peers').attr('data-field', lo === a ? 'inflation_may2023' : 'inflation_latest').attr('data-where', `country=${encodeURIComponent(r.country)}`);
+    });
+  });
+
+  dash.draw('peertable', (tbody) => {
+    if (!ng.ready(tbody, ['peers'])) return;
+    tbody.replaceChildren(...dash.data('peers').data.map((r) => {
+      const tr = document.createElement('tr'); tr.setAttribute('data-key', encodeURIComponent(r.country));
+      [r.country, ng.fmt(+r.inflation_may2023) + '%', ng.fmt(+r.inflation_latest) + '%', ng.fmt(+r.growth_2026_proj) + '%'].forEach((text, i) => {
+        const td = document.createElement('td'); td.textContent = text; if (i) td.className = 'num';
+        if (i === 2) { const s = document.createElement('span'); s.className = 'ng-small'; s.textContent = r.latest_month; td.appendChild(s); }
+        tr.appendChild(td);
+      });
+      return tr;
+    }));
+  });
+
+  window.ngSide = '';
+  document.querySelectorAll('#claims .ng-seg button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      window.ngSide = btn.dataset.side || '';
+      document.querySelectorAll('#claims .ng-seg button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      dash.draw('claimrows'); dash.draw('counts');
+    });
+  });
+
+  const ngVerdictClass = (v) => (/^Supported/.test(v) ? 'v-supported' : /^Partly/.test(v) ? 'v-partly' : /^Cannot/.test(v) ? 'v-cannot' : /^Not/.test(v) ? 'v-not' : '');
+
+  dash.draw('counts', (el) => {
+    if (!ng.ready(el, ['verdict_counts'])) return;
+    const side = window.ngSide || 'All';
+    el.replaceChildren(...dash.data('verdict_counts').data.filter((r) => r.side === side).map((r) => {
+      const s = document.createElement('span'); s.className = `ng-pill ${ngVerdictClass(r.verdict)}`;
+      const n = document.createElement('b'); n.textContent = String(r.n);
+      n.setAttribute('data-source', 'verdict_counts'); n.setAttribute('data-field', 'n');
+      n.setAttribute('data-where', `side=${encodeURIComponent(r.side)}&verdict=${encodeURIComponent(r.verdict)}`);
+      s.appendChild(n); s.appendChild(document.createTextNode(' ' + r.verdict));
+      return s;
+    }));
+  });
+
+  dash.draw('claimrows', (tbody) => {
+    if (!ng.ready(tbody, ['claims'])) return;
+    const side = window.ngSide;
+    const rows = dash.data('claims').data.filter((c) => !side || (String(c.claim_id).startsWith('O') ? 'Opposition' : 'Government') === side);
+    tbody.replaceChildren(...rows.map((c) => {
+      const tr = document.createElement('tr'); tr.setAttribute('data-key', encodeURIComponent(c.claim_id));
+      const td1 = document.createElement('td'); td1.className = 'ng-claimtext'; td1.textContent = c.claim;
+      const td2 = document.createElement('td'); td2.textContent = c.claimant;
+      const d = document.createElement('span'); d.className = 'ng-small'; d.textContent = c.claim_date; td2.appendChild(d);
+      const td3 = document.createElement('td'); const pill = document.createElement('span'); pill.className = `ng-pill ${ngVerdictClass(c.verdict)}`; pill.textContent = c.verdict; td3.appendChild(pill);
+      const td4 = document.createElement('td'); td4.className = 'ng-evidence'; td4.textContent = c.key_evidence;
+      if (c.gap) { const g = document.createElement('span'); g.className = 'ng-small'; g.textContent = 'Still needed: ' + c.gap; td4.appendChild(g); }
+      tr.append(td1, td2, td3, td4);
+      return tr;
+    }));
+  });
+</script>
+
+<script>
+  dash.calc('pg_status_counts', {
+    title: 'Pain-to-gain answers by status',
+    description: 'Number of the ten answers for each reform that are realised, projected, partly delivered or not yet sourced.',
+    inputs: ['pain_to_gain'],
+    fn: (answers) => {
+      const out = [];
+      const reforms = [...new Set(answers.map((a) => a.reform_id))];
+      const statuses = ['Realised', 'Partly delivered', 'Projected', 'Not yet sourced'];
+      reforms.forEach((reform_id) => statuses.forEach((status) => {
+        out.push({reform_id, status, n: answers.filter((a) => a.reform_id === reform_id && a.status === status).length});
+      }));
+      return out;
+    }
+  });
+
+  window.ngReform = 'subsidy';
+  document.querySelectorAll('#pg-seg button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      window.ngReform = btn.dataset.reform;
+      document.querySelectorAll('#pg-seg button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      dash.draw('pgrows'); dash.draw('pgtitle'); dash.draw('pgcounts');
+    });
+  });
+
+  const ngStatusClass = (s) => (s === 'Realised' ? 's-realised' : s === 'Partly delivered' ? 's-partly' : s === 'Projected' ? 's-projected' : 's-notyet');
+
+  dash.draw('pgsummary', (tbody) => {
+    if (!ng.ready(tbody, ['pain_gain_summary'])) return;
+    tbody.replaceChildren(...dash.data('pain_gain_summary').data.map((r) => {
+      const tr = document.createElement('tr'); tr.setAttribute('data-key', encodeURIComponent(r.reform_id));
+      [r.reform, r.realised, r.projected, r.cost_bearers].forEach((text, i) => {
+        const td = document.createElement('td'); td.textContent = text; if (i === 0) td.className = 'ng-q'; tr.appendChild(td);
+      });
+      return tr;
+    }));
+  });
+
+  dash.draw('pgtitle', (el) => {
+    if (!ng.ready(el, ['pain_to_gain'])) return;
+    const row = dash.data('pain_to_gain').data.find((r) => r.reform_id === window.ngReform);
+    el.textContent = row ? row.reform : '—';
+  });
+
+  dash.draw('pgcounts', (el) => {
+    if (!ng.ready(el, ['pg_status_counts'])) return;
+    el.replaceChildren(...dash.data('pg_status_counts').data.filter((r) => r.reform_id === window.ngReform && r.n > 0).map((r) => {
+      const s = document.createElement('span'); s.className = `ng-pill ${ngStatusClass(r.status)}`;
+      const n = document.createElement('b'); n.textContent = String(r.n);
+      n.setAttribute('data-source', 'pg_status_counts'); n.setAttribute('data-field', 'n');
+      n.setAttribute('data-where', `reform_id=${encodeURIComponent(r.reform_id)}&status=${encodeURIComponent(r.status)}`);
+      s.appendChild(n); s.appendChild(document.createTextNode(' ' + r.status));
+      return s;
+    }));
+  });
+
+  dash.draw('pgrows', (tbody) => {
+    if (!ng.ready(tbody, ['pain_to_gain'])) return;
+    const rows = dash.data('pain_to_gain').data.filter((r) => r.reform_id === window.ngReform);
+    tbody.replaceChildren(...rows.map((r) => {
+      const tr = document.createElement('tr'); tr.setAttribute('data-key', encodeURIComponent(r.row_id));
+      const q = document.createElement('td'); q.className = 'ng-q';
+      const num = document.createElement('span'); num.className = 'ng-qnum'; num.textContent = r.q + '.';
+      q.appendChild(num); q.appendChild(document.createTextNode(r.question));
+      const a = document.createElement('td'); a.className = 'ng-answer'; a.textContent = r.answer;
+      const st = document.createElement('td'); const pill = document.createElement('span'); pill.className = `ng-pill ${ngStatusClass(r.status)}`; pill.textContent = r.status; st.appendChild(pill);
+      tr.append(q, a, st);
+      return tr;
+    }));
+  });
+</script>
+
+</div>
+</body>
+</html>

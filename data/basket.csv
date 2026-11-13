@@ -1,0 +1,15 @@
+item_id,item,unit,price_may2023_ngn,price_latest_ngn,latest_period,change_pct,hours_min_wage_2023,hours_min_wage_latest,illustrative_qty_per_month,cost_2023,cost_latest,source_2023,source_latest,note
+garri,"Garri, white, loose",1kg,371.42,808.96,Apr 2026,117.8,2.15,2.0,10,3714.2,8089.6,NBS SFPW May 2023,NBS SFPW Apr 2026 (Nairametrics),
+beans,"Beans, brown",1kg,629.75,1338.93,Apr 2026,112.6,3.64,3.32,6,3778.5,8033.58,NBS SFPW May 2023,NBS SFPW Apr 2026 (NAN/Nairametrics),
+tomato,Tomato,1kg,498.34,1177.92,Apr 2026,136.4,2.88,2.92,4,1993.36,4711.68,NBS SFPW May 2023,NBS SFPW Apr 2026 (NAN/Nairametrics),
+onion,Onion bulb,1kg,453.86,1164.39,Apr 2026,156.6,2.62,2.88,2,907.72,2328.78,NBS SFPW May 2023,NBS SFPW Apr 2026 (NAN/Nairametrics),Source article reports inconsistent state figures; national average used
+palm_oil,Palm oil,1 bottle / 1 litre,1109.17,2396.32,Apr 2026,116.0,6.41,5.93,2,2218.34,4792.64,NBS SFPW May 2023 (1 bottle),"NBS SFPW Apr 2026 (1 litre, NAN)",Unit labels differ between reports; to confirm same unit
+lpg,Cooking gas refill,12.5kg,9537.89,22382.2,Apr 2026,134.7,55.11,55.42,1,9537.89,22382.2,NBS LPG Price Watch May 2023,NBS LPG Price Watch Apr 2026 (Legit.ng),
+bus,Bus fare within city,per drop,649.59,1397.27,Apr 2026,115.1,3.75,3.46,44,28581.96,61479.88,NBS Transport Fare Watch May 2023,NBS Transport Fare Watch Apr 2026 (Nairametrics),"Two trips per working day, 22 days"
+petrol,Petrol,1 litre,238.11,1596.25,May 2026,570.4,1.38,3.95,0,0.0,0.0,NBS PMS Price Watch May 2023,NBS PMS Price Watch May 2026 (Gazette),Not in minimum-wage basket; shown per unit
+kerosene,Kerosene,1 litre,1206.05,2971.94,May 2026,146.4,6.97,7.36,0,0.0,0.0,NBS Kerosene Price Watch May 2023,NBS Kerosene Price Watch May 2026 (ThisDay),Per unit only
+diesel,Diesel,1 litre,844.28,3277.47,May 2026,288.2,4.88,8.12,0,0.0,0.0,NBS AGO Price Watch May 2023,"NBS AGO Price Watch May 2026 (ThisDay); Lagos receipt N1,905 on 30 Oct 2026",Per unit only
+rice_local_50kg,"Rice, local parboiled",50kg bag,31000,112000,Mar 2026,261.3,179.1,277.3,0,,,"Author-supplied market range N28,000-34,000 (midpoint used)",NBS SFPW Mar 2026 (HousingTV Africa),"Baseline is word-of-mouth market range, not NBS; some markets quoted about N60,000 in Mar 2026"
+rice_imported_50kg,"Rice, imported parboiled",50kg bag,38000,133975,Mar 2026,252.6,219.6,331.7,0,,,"Author-supplied market range N34,000-42,000 (midpoint used)",NBS SFPW Mar 2026 (HousingTV Africa),
+electricity_band_a,"Electricity, Band A",per kWh,69.5,209.5,Nov 2026,201.4,0.4,0.52,0,,,Author-supplied: about N68-71/kWh in May 2023,Author-supplied: about N209.50/kWh (some DisCos N160-209.50),Both ends author-supplied; to confirm against NERC tariff orders
+electricity_band_b,"Electricity, Band B",per kWh,57.5,64.7,Nov 2026,12.5,0.33,0.16,0,,,Author-supplied: Bands B-E N50-65/kWh in May 2023 (midpoint),Author-supplied: Band B N61.00-68.35/kWh (midpoint),Both ends author-supplied; to confirm against NERC tariff orders
